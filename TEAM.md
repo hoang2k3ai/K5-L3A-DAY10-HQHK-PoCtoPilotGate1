@@ -146,5 +146,5 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 ### Exit ticket
 
-- Học được: (bạn tự viết)
-- Chưa chắc: (bạn tự viết)
+- Học được: thu hẹp phạm vi pilot (`HN + HCM`) có thể vô tình che lấp lỗ hổng của cổng (mở `all` trên gói `S2` mới lộ ra kho `DN` còn hoàn sai 1.080.000đ trước khi vá), và mọi con số quyết định Gate 1 phải đo trực tiếp từ `eval`/`grade` chứ không ước lượng cảm tính.
+- Chưa chắc: khi `REFUND-v4` có hiệu lực từ `01/12/2026` (hạ `auto_limit_vnd` xuống `100.000đ` và tăng ca chuyển duyệt), mức chi phí `5.273đ/ticket` và `ROI 0,9` hiện tại có giữ được với 1 người trực/ca hay không.
