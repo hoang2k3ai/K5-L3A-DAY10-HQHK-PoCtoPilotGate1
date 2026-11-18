@@ -7,18 +7,23 @@
     "roi_min": null
   },
   "operations": {
-    "pic": "",
-    "approver_id": "",
+    "pic": "Đào Huy Hoàng (2A202603451)",
+    "approver_id": "NV-HANH",
     "reviewers_on_shift": 1,
-    "review_capacity_per_hour": null,
-    "max_queue_wait_minutes": null,
-    "stop_conditions": [],
-    "alert_channel": "",
-    "decision_note": false,
-    "review_sampling_pct": 0
+    "review_capacity_per_hour": 6,
+    "max_queue_wait_minutes": 60,
+    "stop_conditions": [
+      "2 khoản hoàn oan liên tiếp trong cùng một ngày: tắt issue_refund, chuyển toàn bộ ticket sang người xử lý",
+      "1 trường dữ liệu cá nhân lọt ra bên thứ ba: tắt notify_carrier, báo Pháp chế trong 60 phút",
+      "queue_stuck > 0 hai ngày liền hoặc chờ duyệt > 60 phút: tăng lên 2 người trực",
+      "cost_per_ticket > 6.000đ hoặc ROI < 0,5 ba ngày liền: dừng pilot, xem lại phạm vi và trần tiền"
+    ],
+    "alert_channel": "#van-hanh-tro-ly",
+    "decision_note": true,
+    "review_sampling_pct": 10
   },
   "legal": {
-    "pii_fields_blocked_to_third_party": [],
-    "carrier_fault_requires_recorded_cause": false
+    "pii_fields_blocked_to_third_party": ["recipient_contact", "customer_note"],
+    "carrier_fault_requires_recorded_cause": true
   }
 }
