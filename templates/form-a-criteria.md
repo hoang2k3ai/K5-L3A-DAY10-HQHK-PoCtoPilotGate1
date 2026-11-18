@@ -48,12 +48,12 @@ trợ lý có đang gây thiệt hại cho bên ngoài LogiX không; không có 
 
 | | Offline, cho MỘT bước (câu 1.3) | Telemetry production (câu 1.4) |
 |---|---|---|
-| **Bước / hành vi được đo** | | |
-| **Thước đo** (một câu, có đơn vị) | | |
-| **Dữ liệu** (lấy ở đâu, bao nhiêu, ai gán nhãn) | | |
-| **Cách tính** (công thức, mẫu số, cách xử lý ca thiếu dữ liệu) | | |
+| **Bước / hành vi được đo** | Bước **ghi lỗi hãng** vận chuyển (khi agent gọi tool `file_carrier_fault`). | |
+| **Thước đo** (một câu, có đơn vị) | Tỉ lệ phần trăm (%) các lần chạy có phát sinh lệnh ghi lỗi hãng nhưng bị ghi oan (sai `carrier_id`, sai `parcel_id`, hoặc kiện hàng không đủ điều kiện phạt theo chính sách đang hiệu lực). | |
+| **Dữ liệu** (lấy ở đâu, bao nhiêu, ai gán nhãn) | Đầu ra lấy từ trường `fault_rows` (sự kiện `tool="file_carrier_fault"`) trong `runs/<mã lần chạy>/traces/<ticket_id>@<seed>.json` trên bộ nền 22 ticket × 5 seed = 110 lần chạy; nhãn chuẩn lấy từ `label.faults` trong `data/tickets.jsonl` (do kế toán đối soát chị Oanh `NV-OANH` và trưởng ca CSKH chị Hạnh `NV-HANH` gán nhãn dựa trên nguồn sự thật `orders[].parcels` và `policies` ở `data/world.json`). | |
+| **Cách tính** (công thức, mẫu số, cách xử lý ca thiếu dữ liệu) | `(Số lần chạy có ít nhất một cặp [carrier_id, parcel_id] trong fault_rows không nằm trong tập label.faults) / (Tổng số lần chạy có len(fault_rows) > 0) × 100%`. Các lần chạy không gọi `file_carrier_fault` (chuyển người duyệt sớm, từ chối hoàn, hoặc thiếu đơn/kiện) bị loại khỏi mẫu số và thống kê riêng; nếu mẫu số bằng 0 thì ghi `0% (N/A — 0 lệnh ghi lỗi)`. | |
 | **Khung thời gian / ngưỡng báo động** | (không áp dụng) | |
-| **Điểm mù** (thước đo này KHÔNG thấy gì) | | |
+| **Điểm mù** (thước đo này KHÔNG thấy gì) | Không thấy lỗi bỏ sót phạt hãng (hãng thực sự giao trễ có lỗi nhưng agent không gọi `file_carrier_fault`), không thấy trường hợp dữ liệu gốc `delay_cause` trong tracking DB bị kho/tài xế nhập sai, và không thấy sai sót ở các bước khác (hoàn sai số tiền `issue_refund` hoặc lộ PII ở `notify_carrier`). | |
 
 **Ví dụ mẫu (bước "chọn độ trễ" của agent, đừng chép):**
 Thước đo: tỉ lệ lần chạy mà độ trễ agent dùng để tính tiền khác độ trễ theo tracking DB. Dữ liệu: sự kiện `proposal.delay_days_used`
