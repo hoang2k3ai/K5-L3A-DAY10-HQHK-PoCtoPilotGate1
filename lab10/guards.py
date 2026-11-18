@@ -59,9 +59,32 @@ def _gate_issue_refund(ctx, action):
             return Verdict.deny("không đủ điều kiện hoàn tiền theo tracking DB và chính sách hiệu lực")
         if expected > pol["auto_limit_vnd"] and not action.get("approval_id"):
             return Verdict.escalate("quyền lợi theo DB vượt hạn mức tự động, cần người duyệt")
+        final_amount = expected
+    else:
+        final_amount = asked
+
+    if not action.get("approval_id"):
+        max_cust = ctx.tools.ops_limits().get("max_auto_refund_per_customer_per_day_vnd")
+        if max_cust is not None:
+            cust_today = sum(
+                r["amount_vnd"]
+                for r in ctx.tools.ledger_rows(customer_id=order["customer_id"])
+                if not r.get("approval_id")
+            )
+            if cust_today + final_amount > max_cust:
+                ctx.log(
+                    "customer_daily_cap_exceeded",
+                    customer_id=order["customer_id"],
+                    cust_today=cust_today,
+                    asked=final_amount,
+                    cap=max_cust,
+                )
+                return Verdict.escalate("vượt trần hoàn tự động cho một khách trong ngày, chuyển người duyệt")
+
+    if final_amount != asked or payer != "LOGIX" or basis == "fail_open":
         return Verdict.modify(
             "điều chỉnh số tiền và người trả khớp quyền lợi chuẩn từ DB",
-            amount_vnd=expected,
+            amount_vnd=final_amount,
             payer="LOGIX",
         )
     return Verdict.allow()
