@@ -2,8 +2,8 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm (`TenNhom`, không dấu, không khoảng trắng):
-- Lớp: `L3A` / `L3B`
+- Tên nhóm (`TenNhom`, không dấu, không khoảng trắng): HQHK
+- Lớp: L3A
 - Repo của bàn: `K5-<L3A|L3B>-DAY10-HQHK-PoCtoPilotGate1`
 - Thẻ sự cố đã bốc (S1–S8):
 
@@ -15,7 +15,7 @@ Họ tên đầy đủ và MSSV của **mọi** thành viên; thêm dòng nếu 
 | --: | --------- | ---- | --- | :---------: |
 |   1 | Đào Huy Hoàng          | 2A202603451     | Vận hành và pháp lý    |             |
 |   2 | Trần Mạnh Hùng         | 2A202603496     | Gate Engineer          |             |
-|   3 |           |      |     |             |
+|   3 | Lê Hồng Quân          | 2A202603705     | Kỹ sư cổng    |             |
 |   4 |           |      |     |             |
 |   5 |           |      |     |             |
 
