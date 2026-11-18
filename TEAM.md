@@ -86,8 +86,8 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 ### Exit ticket
 
-- Học được: **[NHÁP · Quân, sửa lại bằng lời của bạn]** một con số tổng (pass_rate 0,9909 ở bộ nền) có thể che hoàn toàn một lỗi gây thiệt hại ra ngoài LogiX (một ticket `T-002@55`: hoàn oan 20.000đ và ghi oan lỗi hãng), nên ngưỡng an toàn phải đặt riêng bằng 0 chứ không gộp vào pass_rate; và ngưỡng kinh doanh phải suy từ `ops_facts` (mỗi ca chuyển người tốn 10.000đ, bằng làm tay), không chép từ ví dụ.
-- Chưa chắc: **[NHÁP · Quân, sửa lại bằng lời của bạn]** các con số vận hành đều là mock (6 ca/giờ, 10 phút/ca, chi phí LLM theo độ dài chữ), nên chưa biết chi phí 5.273đ/ticket và ROI 0,9 trên gói S2 có giữ được khi người duyệt thật chậm hơn, và khi REFUND-v4 (01/12/2026) làm tỉ lệ chuyển người tăng.
+- Học được: một con số tổng (pass_rate 0,9909 ở bộ nền) có thể che hoàn toàn một lỗi gây thiệt hại ra ngoài LogiX (một ticket `T-002@55`: hoàn oan 20.000đ và ghi oan lỗi hãng), nên ngưỡng an toàn phải đặt riêng bằng 0 chứ không gộp vào pass_rate; và ngưỡng kinh doanh phải suy từ `ops_facts` (mỗi ca chuyển người tốn 10.000đ, bằng làm tay), không chép từ ví dụ.
+- Chưa chắc: các con số vận hành đều là mock (6 ca/giờ, 10 phút/ca, chi phí LLM theo độ dài chữ), nên chưa biết chi phí 5.273đ/ticket và ROI 0,9 trên gói S2 có giữ được khi người duyệt thật chậm hơn, và khi REFUND-v4 (01/12/2026) làm tỉ lệ chuyển người tăng.
 
 ## TranManhHung-2A202603496
 
