@@ -56,3 +56,29 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Học được: ngưỡng phải suy ra từ trần vận hành (`ops_limits`, `ops_facts`) và từ câu hỏi "chấp nhận bao nhiêu ticket hỏng", không chọn theo cảm giác; và "ký trước khi đo" là thứ kiểm được bằng lịch sử git, không phải bằng lời.
 - Chưa chắc: 0,91 (⇔ 1 ticket hỏng trên 110 trial) đã đủ chặt để bảo vệ quyết định trước hội đồng chưa, và có nên siết pass^k riêng cho nhóm lỗi tiền/thẩm quyền thay vì dùng một ngưỡng chung cho mọi loại lỗi.
+
+## LeHongQuan-2A202603705
+
+### Phần việc phụ trách
+
+- Vai **Sản phẩm và kinh doanh** (cùng bạn Khánh); đổi từ Kỹ sư cổng sang vai này ở CP1.
+- Phiếu A: mục **A1** (câu 1.1), **A3** (câu 1.5), **A4** (câu 1.6: câu tiêu chí, hai câu ranh giới đầu ra, bảng soát bốn câu, nhóm `business_ops`, ngày xem lại).
+- File: `config/acceptance_criteria.json` (bản điền đầu tiên), `templates/form-a-criteria.md` (A1, A3, A4), `TEAM.md` (bảng thành viên).
+
+### Đóng góp cụ thể
+
+- Điền bảng thành viên `TEAM.md`, gắn `upstream` cho repo, chạy `python3 -m unittest discover -s tests` (13 test OK) ở CP1.
+- Soạn nháp Phiếu A: mục tiêu hệ thống (câu 1.1), phương án (b) của câu 1.5, sáu câu tiêu chí "Nếu … thì chúng tôi sẽ …", ranh giới đầu ra (300.000đ/khách/ngày, 2.000.000đ/ngày, lỗi hãng thứ 3 trở đi phải có người duyệt), bảng soát bốn câu hỏi.
+- Điền `config/acceptance_criteria.json` lần đầu và suy ngưỡng `business_ops` từ `ops_facts`, `ops_limits` và công thức trong `lab10/ops.py` (chi phí/ticket, ROI, `escalation_rate_max`, `queue_stuck_max`). Bộ ngưỡng cuối cùng do cả nhóm chốt trước khi ký.
+
+### Bằng chứng
+
+- Commit: `d08395d` (CP1, `TEAM.md`), `24b7931` (đổi vai), `73d79ca` (nháp Phiếu A), `5489e98` (điền JSON), `c654b04` (chỉnh ngưỡng theo `ops_facts`).
+- Dòng phiếu: Phiếu A mục A1 (1.1), A3 (1.5), A4 (1.6, "Căn cứ ngưỡng").
+- Máy đo: chưa có `runs/`; chưa chạy `eval` vì ký tiêu chí trước (commit ký: `cbfa81c`).
+- AI: dùng trợ lý AI soạn nháp và đối chiếu số trong `data/world.json`, `lab10/ops.py`; ngưỡng cuối do nhóm quyết.
+
+### Exit ticket
+
+- Học được: (bạn tự viết)
+- Chưa chắc: (bạn tự viết)
