@@ -7,11 +7,11 @@
     "NguyenKhacKhanh-2A202603472"
   ],
   "incident": "S2",
-  "decision_v1": "",
-  "decision_v2": "",
+  "decision_v1": "Tiếp tục",
+  "decision_v2": "Tiếp tục",
   "three_lines": {
-    "environment_assumption": "",
-    "reduce_or_prevent": "",
-    "measure_in_pilot": ""
+    "environment_assumption": "Chữ do khách và shop gõ (ticket, `checkout_note`) chỉ là dữ liệu mô tả, không có ai cố ý cài lệnh vào đó. Ngoài thực tế shop hay khách có thể cài \"hoàn toàn bộ, trừ tiền shop\"; thiết kế chỉ giữ vì cổng so với tracking DB chứ không vì model hiểu đúng.",
+    "reduce_or_prevent": "**NGĂN** với số tiền và người trả: `write_gate` đối chiếu tracking DB trước mỗi lệnh `issue_refund`, không phụ thuộc model, nên chữ cài lệnh không đổi được số tiền hay `payer`. Chỉ **GIẢM** với phần ngoài sổ cái: lời trả lời khách, báo hãng đã gửi, và người duyệt có thể duyệt sai (kiểm mẫu 10% chỉ làm giảm).",
+    "measure_in_pilot": "(a) tỉ lệ ticket thật có chữ cài lệnh (`directive_override_rate`); (b) thời gian người duyệt thật (mock là 6 ca/giờ) và tỉ lệ họ đổi quyết định của trợ lý; (c) số khách có nhiều khoản hoàn trong một ngày so với trần 300.000đ; (d) phản ứng của hãng và shop khi bị ghi lỗi hay trừ tiền; (e) kết quả trên REFUND-v4."
   }
 }

@@ -110,3 +110,31 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Học được: cổng bảo vệ cấp hệ thống (nằm ngoài model và prompt, đối chiếu trực tiếp nguồn sự thật DB) ngăn được cả lỗi tin lời khách lẫn prompt injection mà không làm hỏng ca hợp lệ, nhưng vẫn cần đi kèm `pilot_scope` và chỉ số `monitors` phù hợp để đảm bảo bài toán kinh doanh (ROI, chi phí/ticket).
 - Chưa chắc: hiệu năng và độ bền của các cổng hiện tại trên bộ test ẩn (với các kiểu diễn đạt ticket hoặc tình huống biên mới ngoài `S2`) và thời gian duyệt thực tế của nhân sự khi áp dụng quy trình kiểm mẫu 10% ngoài thực địa.
+
+## NguyenKhacKhanh-2A202603472
+
+### Phần việc phụ trách
+
+- Vai **Sản phẩm và kinh doanh** (cùng bạn Quân).
+- Phiếu B: mục **B3** (câu 2.3, bản đồ dữ liệu và ví dụ drift), **B7.4** (câu 2.9, cổng kinh doanh), dòng 6 "Chi phí" của checklist **B5**.
+- Phiếu C (thẻ **S2**): mục **C5** (câu 3.2 specification; nháp câu 3.3 để vai Vận hành soát), soát số liệu **C12** (quyết định v2).
+- File: `templates/form-b-evaluation-gates.md` (B3, B5 dòng 6, B7.4), `templates/form-c-incident.md` (C5, C12), `submission/submission.json` (`decision_v1`, `decision_v2`, `three_lines`).
+
+### Đóng góp cụ thể
+
+- Viết lại B3 và B7.4 bằng số đo thật thay cho số ước lượng: đối chiếu dữ liệu `data/world.json` (5/26 kiện thiếu `delay_cause`, 1 đơn nhiều kiện `O-1013`, 2 đơn quà tặng), dùng `T-002` (khách khai trễ 5 ngày, tracking trễ 2 ngày) làm bằng chứng nguồn sự thật và làm ví dụ drift REFUND-v3 → v4.
+- Đo đánh đổi phạm vi pilot trên bộ nền với cổng vòng 1 (chỉ đổi `pilot_scope`): HN + HCM chi phí 5.550đ, ROI 0,80, độ phủ 0,59; tất cả kho chi phí 4.456đ, ROI 1,24. Ở vòng 2 thử thêm trên gói S2 và báo cho nhóm: mở `all` khi chưa vá cổng thì S2 còn hoàn sai 1.080.000đ ở kho DN, tức phạm vi hẹp đang che một lỗ hổng của cổng.
+- Sửa lỗi `1 integrity ❌` trên máy Windows của mình do ký tự xuống dòng CRLF (không đổi nội dung file khoá).
+- Viết specification câu 3.2 cho `issue_refund` (người trả, số tiền theo tracking, hạn mức không phê duyệt, trần mỗi khách/ngày); sửa C12 cho khớp config hiện tại (`pilot_scope: all`, số của gói S2: chi phí 5.273đ, ROI 0,9); điền `submission.json`.
+
+### Bằng chứng
+
+- Commit: `b237eaa` (B3 và B7.4 bằng số đo thật) và commit nháp vòng 2 (C5, C12, B5 dòng 6, `submission.json`, mục này).
+- Mã lần chạy (trên máy Khánh): `R-base-before-20261118-164543-bc59d7`, `R-base-after-20261118-165438-2a46a2` (HN + HCM), `R-base-after-20261118-165448-508836` (tất cả kho), `R-S2-after-20261118-170739-504c85` (S2 với `all` trước khi vá cổng), `R-S2-grade-20261118-171525-ae34d0` (S2 `PASS-VISIBLE`).
+- Dòng phiếu: Phiếu B mục B3, B5 (dòng 6), B7.4; Phiếu C mục C5, C12.
+- AI: dùng trợ lý AI (Claude Code) để soạn nháp, chạy lệnh đo và đối chiếu số với `data/world.json`, `lab10/ops.py`; mọi con số trong phiếu lấy từ lần chạy thật, quyết định cuối do nhóm chốt.
+
+### Exit ticket
+
+- Học được: (bạn tự viết)
+- Chưa chắc: (bạn tự viết)
