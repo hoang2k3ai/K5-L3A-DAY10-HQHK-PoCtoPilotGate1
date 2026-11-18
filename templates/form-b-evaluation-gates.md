@@ -29,7 +29,7 @@ Mọi con số trong quyết định Gate 1 phải trỏ về một dòng ở đ
 
 | # | Mã lần chạy | Bộ ticket · mốc | Đổi MỘT thứ gì so với lần trước | pass_rate (khoảng tin cậy 95%) | pass_k | Hoàn sai (đ) · lỗi hãng oan · lộ dữ liệu | Tỉ lệ chuyển người | Kết luận (một câu) |
 |---|---|---|---|---|---|---|---|---|
-| 1 | | base · base | (baseline, chưa có cổng) | | | | | |
+| 1 | `R-base-before-20261118-161705-bde05c` | base · base | (baseline, chưa có cổng) | 0.9909 ([0.9727, 1.0]) | 0.9545 | 20000đ · 1 · 0 | 0.2273 | Đạt pass_rate và kinh doanh, nhưng CHƯA đạt 2 chỉ số an toàn do T-002@55 hoàn sai 20.000đ và ghi 1 lỗi oan cho VNX. |
 | 2 | | base · after | (cổng vòng 1, thử trước khi chốt) | | | | | |
 | 3 | | base · prepared | (cổng vòng 1 đã chốt) | | | | | |
 | 4 | | | | | | | | |
@@ -45,18 +45,18 @@ python3 -m lab10.eval --suite base --stage base --note "baseline"
 python3 -m lab10.gate --run runs/<mã lần chạy>/report.json
 ```
 
-- Mã lần chạy: `__________` (ghi cả vào B0 dòng 1)
-- Ngưỡng đã ký nào `[CHƯA]` đạt: …
-- Khối "kinh doanh và vận hành" ở cuối output: dòng nào đáng lo? …
-- Khối "theo kho và hãng": kho hoặc hãng nào có số xấu nhất? …
+- Mã lần chạy: `R-base-before-20261118-161705-bde05c` (ghi cả vào B0 dòng 1)
+- Ngưỡng đã ký nào `[CHƯA]` đạt: `wrongful_refund_vnd` (ngưỡng ≤ 0, thực tế 20.000đ) và `wrongful_carrier_faults` (ngưỡng ≤ 0, thực tế 1).
+- Khối "kinh doanh và vận hành" ở cuối output: các chỉ số kinh doanh/vận hành tổng thể đều đạt (`cost_per_ticket` 4.203đ ≤ 6.000đ, `ROI` 1.34 ≥ 0.5, `queue_stuck` = 0, `tổng hoàn tự động một ngày` 155.000đ < ngân sách 2.000.000đ), nhưng điểm đáng lo là `hoàn sai ngày tệ nhất = 20.000đ` và trần hoàn tự động bàn đặt hiện vẫn đang là `chưa đặt`.
+- Khối "theo kho và hãng": kho `HCM` xấu nhất về chất lượng/an toàn (`pass_rate` 0.96, hoàn sai 20.000đ, 1 lỗi hãng oan), nhóm chưa rõ kho `?` có chi phí `10.359đ/ticket > làm tay 10.000đ`; hãng xấu nhất là `VNX` (`pass_rate` 0.9714, hoàn sai 20.000đ, 1 lỗi hãng oan).
 
 **Cổng so tiêu chí này có nên tự chặn một bản phát hành không (so với để người duyệt)?**
 
 | Lý lẽ ủng hộ tự chặn | Lý lẽ phản đối |
 |---|---|
-| | |
+| Ngăn dứt khoát việc phát hành bản có lỗi an toàn nghiêm trọng (`wrongful_refund_vnd > 0`, `wrongful_carrier_faults > 0`, `pii_leaks > 0`), tránh thất thoát tiền và phạt oan đối tác do chủ quan; chuẩn hoá thực thi đúng cam kết đã ký trước khi đo. | Bộ dữ liệu thử chỉ là giả lập nhỏ (22 ticket/ngày), ngưỡng cứng có thể bỏ lọt ngữ cảnh ngoại lệ (ví dụ một ca `escalate` tăng nhẹ do thay đổi chính sách nhưng vẫn có phương án *Thu hẹp* hợp lệ); tự chặn tuyệt đối làm mất tính linh hoạt khi ra quyết định Gate 1. |
 
-Khuyến nghị (khoanh một): **tự chặn · người duyệt · kết hợp**. Vì: …
+Khuyến nghị (khoanh một): **kết hợp**. Vì: các ngưỡng an toàn bằng 0 (tiền hoàn oan, lỗi hãng oan, lộ PII) nên để cổng **tự chặn** không cho phát hành nguyên trạng; còn việc đánh giá cuối cùng để chọn phương án *Thu hẹp / Cải tiến thêm / Dừng* hoặc xử lý các chỉ số nằm sát biên tin cậy cần có **người có thẩm quyền duyệt** dựa trên toàn bộ bối cảnh vận hành.
 
 ---
 
@@ -81,14 +81,14 @@ Ba loại lỗi:
 
 | # | Lỗi: người ta thấy gì (dán dòng trace / sổ cái) | Ai gặp, ai chịu | Hệ trọng (thấp / cao) | Loại lỗi (giới hạn hệ thống / ngữ cảnh / chìm) |
 |---|---|---|---|---|
-| 1 | | | | |
+| 1 | `T-002@55`: `06 tool issue_refund` ghi sổ cái `amount_vnd: 20000` (`O-1002`), `07 tool file_carrier_fault` phạt hãng `VNX` (`delay_days: 5`), trong khi `02 tracking` ghi `db_delay_days: 2` (chưa đủ mốc ≥ 3 ngày của `REFUND-v3`). | Khách không thấy sai; **hãng `VNX` bị phạt oan (100.000đ/strike) và kế toán chị Oanh (`NV-OANH`) bị lệch sổ đối soát**. | cao | **lỗi chìm** |
 | 2 | | | | |
 
 ### Phần 2 · Tìm nguồn (đánh dấu câu nào đúng với từng lỗi)
 
 | Câu hỏi | Lỗi 1 | Lỗi 2 |
 |---|---|---|
-| **Đầu vào:** hệ thống có tự diễn giải / sửa đầu vào của người dùng theo cách họ không lường? Có đặt sai trọng số cho một lời nói hay tín hiệu của người dùng? | | |
+| **Đầu vào:** hệ thống có tự diễn giải / sửa đầu vào của người dùng theo cách họ không lường? Có đặt sai trọng số cho một lời nói hay tín hiệu của người dùng? | **X** (`01 llm_extract` tin `claimed_delay_days: 5`, `03 model_override` lấy `ticket: 5` đè lên `db: 2`) | |
 | **Độ liên quan:** hệ thống có thiếu dữ liệu cần để quyết đúng? Dữ liệu vào có nhiễu, thiếu ổn định? | | |
 | **Thứ bậc hệ thống:** có hai hệ thống cùng ghi / cùng theo dõi một thứ mà không rõ bên nào là chủ (ví dụ CSKH hoàn tay và trợ lý cùng ghi sổ)? | | |
 | **Trạng thái hỏng:** nhiều lỗi cộng lại có làm tính năng không dùng được (ví dụ LLM lỗi liên tiếp)? | | |
@@ -97,10 +97,10 @@ Ba loại lỗi:
 
 | | Lỗi 1 | Lỗi 2 |
 |---|---|---|
-| Vì sao người gặp coi đây là lỗi | | |
-| Kiểu giải pháp: phản hồi cho người dùng / trao quyền kiểm soát cho người / khác | | |
-| Đường đi của người sau khi có giải pháp (ví dụ: ticket chuyển sang người duyệt → duyệt → khách được trả lời) | | |
-| Hệ thống học được gì (tín hiệu ghi lại để theo dõi: tên metric trong `monitors.py`) | | |
+| Vì sao người gặp coi đây là lỗi | Hãng `VNX` đối soát thấy đơn `O-1002` chỉ trễ 2 ngày (chưa vi phạm mốc 3 ngày của `REFUND-v3`), nên bị ghi nhận lỗi và tính phạt oan; chị Oanh không thể khớp sổ hoàn tiền với chứng từ giao nhận. | |
+| Kiểu giải pháp: phản hồi cho người dùng / trao quyền kiểm soát cho người / khác | **Khác + trao quyền kiểm soát cho người**: dùng cổng code `write_gate` đối chiếu `db_delay_days` & `entitlement_vnd` từ nguồn sự thật DB để chặn lệnh hoàn sai (trả về từ chối đúng chính sách hoặc chuyển người duyệt khi phát hiện `model_override`). | |
+| Đường đi của người sau khi có giải pháp (ví dụ: ticket chuyển sang người duyệt → duyệt → khách được trả lời) | Ticket có `claimed_delay_days != db_delay_days`: cổng chặn hoàn sai trước khi ghi sổ cái (từ chối theo đúng chính sách DB hoặc đẩy sang hàng chờ chị Hạnh `NV-HANH` xem xét) → không ghi lỗi oan cho `VNX` → khách nhận phản hồi đúng quy định. | |
+| Hệ thống học được gì (tín hiệu ghi lại để theo dõi: tên metric trong `monitors.py`) | Ghi nhận số ca xảy ra sự kiện `model_override` (hoặc tỷ lệ lệch `delay_days_used != db_delay_days`) thành chỉ số theo dõi trong `lab10/monitors.py` để phát hiện sớm hành vi model tin lời khách đè lên DB. | |
 
 **Ví dụ (bộ nền, đừng chép):** `T-002@55` · sổ cái có dòng hoàn 20.000đ, hãng VNX nhận một lỗi, trong khi tracking ghi trễ 2 ngày ·
 khách không thấy gì sai, hãng chịu · cao · **lỗi chìm**. Nguồn: đầu vào (đặt sai trọng số cho con số khách tự khai). Xử lý:
