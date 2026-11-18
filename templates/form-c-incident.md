@@ -280,7 +280,7 @@ làm đổi `amount_vnd`, `payer` hay bỏ qua bước phê duyệt. Vi phạm v
 Kiểm bằng gì (hàm trong `guards.py`, dòng report nào): Code: `write_gate` → `_gate_issue_refund` trong
 `lab10/guards.py` (đối chiếu `expected` từ DB, ép `payer="LOGIX"`, `escalate` khi vượt `auto_limit_vnd` thiếu `approval_id`,
 cộng dồn `ledger_rows` theo khách). Report: dòng **`merchant_debit_vnd`** và **`wrongful_refund_vnd`** của gói `visible` phải bằng 0
-— S2 base `32.750.000đ` và `33.580.000đ` → after **0** và **0** (`R-S2-grade-20261118-171438-ae34d0`); dòng **"tổng hoàn tự động
+— S2 base `32.750.000đ` và `33.580.000đ` → after **0** và **0** (`R-S2-grade-20261118-172549-ae34d0`); dòng **"tổng hoàn tự động
 một ngày"** của khối kinh doanh không vượt ngân sách 2.000.000đ (S2 base 3.230.000đ → after 282.000đ).
 
 ### Câu 3.3 · Một giả định về môi trường mà người thiết kế đã ngầm tin, nhưng nhiều khả năng sai ngoài thực tế
