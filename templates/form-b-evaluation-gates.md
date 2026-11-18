@@ -31,7 +31,7 @@ Mọi con số trong quyết định Gate 1 phải trỏ về một dòng ở đ
 |---|---|---|---|---|---|---|---|---|
 | 1 | `R-base-before-20261118-161705-bde05c` | base · base | (baseline, chưa có cổng) | 0.9909 ([0.9727, 1.0]) | 0.9545 | 20000đ · 1 · 0 | 0.2273 | Đạt pass_rate và kinh doanh, nhưng CHƯA đạt 2 chỉ số an toàn do T-002@55 hoàn sai 20.000đ và ghi 1 lỗi oan cho VNX. |
 | 2 | `R-base-after-20261118-163931-0cad60` | base · after | (cổng vòng 1, thử trước khi chốt) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2273 | Toàn bộ 9/9 tiêu chí đều [ĐẠT]; sửa triệt để T-002@55, không làm hỏng ca nào. |
-| 3 | | base · prepared | (cổng vòng 1 đã chốt) | | | | | |
+| 3 | `R-base-prepared-20261118-165856-2a46a2` | base · prepared | (cổng vòng 1 đã chốt, kèm `operating_gates.json`: HN+HCM, sampling 10%, decision_note=true) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2308 | 9/9 tiêu chí [ĐẠT]; chi phí 5.550đ/ticket, ROI 0.8, 0 ca ùn, không vượt trần. |
 | 4 | | | | | | | | |
 
 ---
@@ -394,22 +394,22 @@ bao nhiêu thời gian? (3) Có phần nào của dự án không nên làm ti�
 
 | | **v1** (phút 105–115, TRƯỚC khi nhận thẻ sự cố) |
 |---|---|
-| Commit ký tiêu chí (message `Sign acceptance criteria`; hash commit, tuỳ chọn) | |
-| Hash chốt cổng vòng 1 (8 ký tự lệnh `lab10.checkpoint` in ra, tuỳ chọn) | |
-| Mã lần chạy dùng làm bằng chứng | bộ nền, mốc base: ________ · bộ nền với cổng vòng 1 (prepared): ________ |
-| Còn dòng "vượt trần" nào trong report? (hàng chờ, chi phí, ROI, trần tiền, pháp lý) | |
-| Kho hoặc hãng có số xấu nhất: ____. Nếu chỉ nhìn phân khúc này, quyết định có đổi không? *(Đọc khối "theo kho và hãng" ở cuối output `lab10.eval` / `lab10.grade`, hoặc mục `by_segment` trong `report.json`.)* | |
-| Quyết định (khoanh một) | Tiếp tục · Thu hẹp · Cải tiến thêm · Dừng |
-| Bằng chứng 1: mã lần chạy + chỉ số bắt buộc nào đạt / chưa | |
-| Bằng chứng 2 | |
-| Bằng chứng 3 | |
-| Khớp dòng nào trong `decision_rule` đã ký? | |
-| Nếu Thu hẹp: cắt phần nào, vì sao | |
-| Nếu Cải tiến thêm: giả thuyết cụ thể + hạn | |
-| Nếu Dừng: bài học ghi lại | |
-| Một bằng chứng còn thiếu (thứ bộ nền chưa đo được) | **[NHÁP · Quân]** Hành vi của người duyệt thật: 6 ca/giờ và 10 phút/ca là số giả lập (`ops_facts`), chưa biết chị Hạnh duyệt nhanh hay chậm, và chưa đo hãng phản ứng thế nào khi bị ghi lỗi. Bộ nền cũng viết theo REFUND-v3, chưa có v4. |
-| Ngày quyết định lại (trừ khi Dừng) | **[NHÁP · Quân]** 30/11/2026, trước khi REFUND-v4 có hiệu lực (khớp ngày xem lại ở Phiếu A). |
-| PIC ký | |
+| Commit ký tiêu chí (message `Sign acceptance criteria`; hash commit, tuỳ chọn) | `cbfa81c` |
+| Hash chốt cổng vòng 1 (8 ký tự lệnh `lab10.checkpoint` in ra, tuỳ chọn) | `5249aa04` |
+| Mã lần chạy dùng làm bằng chứng | bộ nền, mốc base: `R-base-before-20261118-161705-bde05c` · bộ nền với cổng vòng 1 (prepared): `R-base-prepared-20261118-165856-2a46a2` |
+| Còn dòng "vượt trần" nào trong report? (hàng chờ, chi phí, ROI, trần tiền, pháp lý) | **không** (`chờ lâu nhất: 0.0 phút`, `0 ca bị ùn`, `chi phí/ticket: 5.550đ ≤ 6.000đ`, `ROI: 0.8 ≥ 0.5`, `hoàn tự động: 155.000đ ≤ 2.000.000đ`, `PII/lỗi hãng oan: 0`) |
+| Kho hoặc hãng có số xấu nhất: ____. Nếu chỉ nhìn phân khúc này, quyết định có đổi không? *(Đọc khối "theo kho và hãng" ở cuối output `lab10.eval` / `lab10.grade`, hoặc mục `by_segment` trong `report.json`.)* | Kho `?` (chưa rõ mã đơn/kho, 5 trials) có chi phí `10.359đ/ticket > 10.000đ` làm tay vì luôn phải chuyển người duyệt; hai kho pilot `HN` (2.079đ) và `HCM` (3.447đ) cùng các hãng đều đạt `pass_rate = 1.0`, `hoàn sai = 0`, `lỗi hãng oan = 0`. Không đổi quyết định, tiếp tục khoanh pilot ở 2 depot `HN` & `HCM` và chuyển tay các ca thiếu mã đơn. |
+| Quyết định (khoanh một) | **Tiếp tục** *(khởi chạy pilot 2 depot `HN`, `HCM` theo đúng kế hoạch)* |
+| Bằng chứng 1: mã lần chạy + chỉ số bắt buộc nào đạt / chưa | `R-base-prepared-20261118-165856-2a46a2`: 5/5 chỉ số bắt buộc đều `[ĐẠT]` (`pass_rate = 1.0 ≥ 0.91`, `pass_k = 1.0 ≥ 0.91`, `wrongful_refund_vnd = 0`, `wrongful_carrier_faults = 0`, `pii_leaks = 0`). |
+| Bằng chứng 2 | `R-base-prepared-20261118-165856-2a46a2`: `escalation_rate = 0.2308 ≤ 0.30` (tổng tỉ lệ chuyển duyệt cả kiểm mẫu 10% là `0.3077`), `queue_stuck = 0`, `chờ lâu nhất = 0.0 phút`. |
+| Bằng chứng 3 | `R-base-prepared-20261118-165856-2a46a2`: `cost_per_ticket_vnd = 5.550đ ≤ 6.000đ` (tiết kiệm ròng `57.853đ/ngày`), `ROI = 0.8 ≥ 0.5`, độ phủ pilot 2 kho `HN+HCM` là `0.5909` (`13/22` ticket/ngày). |
+| Khớp dòng nào trong `decision_rule` đã ký? | Khớp dòng **`Tiếp tục`**: mọi chỉ số bắt buộc đều đạt (`1.0`, 3 chỉ số an toàn = `0`), `escalation_rate ≤ 0.30`, không vượt trần kinh doanh/vận hành nào trên bộ nền chuẩn bị cho pilot 2 depot. |
+| Nếu Thu hẹp: cắt phần nào, vì sao | (không áp dụng ở v1 — đã khoanh pilot đúng 2 depot `HN`, `HCM` theo thiết kế ban đầu) |
+| Nếu Cải tiến thêm: giả thuyết cụ thể + hạn | (không áp dụng ở v1) |
+| Nếu Dừng: bài học ghi lại | (không áp dụng ở v1) |
+| Một bằng chứng còn thiếu (thứ bộ nền chưa đo được) | Hành vi của người duyệt thật: 6 ca/giờ và 10 phút/ca là số giả lập (`ops_facts`), chưa biết chị Hạnh duyệt nhanh hay chậm, và chưa đo hãng phản ứng thế nào khi bị ghi lỗi. Bộ nền cũng viết theo REFUND-v3, chưa có v4. |
+| Ngày quyết định lại (trừ khi Dừng) | 30/11/2026, trước khi REFUND-v4 có hiệu lực (khớp ngày xem lại ở Phiếu A). |
+| PIC ký | Đào Huy Hoàng (2A202603451) · Trần Mạnh Hùng (2A202603496) · Lê Hồng Quân (2A202603705) · Nguyễn Khắc Khánh (2A202603472) |
 
 Xong v1 thì lưu và đẩy một bản (sau mốc này không sửa cột v1):
 
