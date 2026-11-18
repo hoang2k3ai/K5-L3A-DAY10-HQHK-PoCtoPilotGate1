@@ -411,21 +411,6 @@ bao nhiêu thời gian? (3) Có phần nào của dự án không nên làm ti�
 | Ngày quyết định lại (trừ khi Dừng) | 30/11/2026, trước khi REFUND-v4 có hiệu lực (khớp ngày xem lại ở Phiếu A). |
 | PIC ký | Đào Huy Hoàng (2A202603451) · Trần Mạnh Hùng (2A202603496) · Lê Hồng Quân (2A202603705) · Nguyễn Khắc Khánh (2A202603472) |
 
-**[NHÁP · Quân] Khung chọn quyết định v1 (điền sau khi có report `prepared`; chưa phải kết luận).** Đối chiếu với `decision_rule` đã ký.
-Gate 1 chỉ đạt khi quyết định khớp số trong report. Mốc `base` đã có: pass_rate 0,9909, pass_k 0,9545 (đều đạt 0,91), chi phí 4.203đ, ROI 1,34,
-còn **trượt hai chỉ số an toàn do cùng một ticket `T-002@55`** (hoàn oan 20.000đ, 1 lỗi hãng oan cho VNX).
-
-| Nếu report `prepared` cho thấy | Quyết định khớp `decision_rule` | Việc ghi vào phiếu |
-|---|---|---|
-| 3 chỉ số an toàn = 0; pass_rate ≥ 0,91; pass_k ≥ 0,91; không dòng "vượt trần" | **Tiếp tục** (chỉ khi không còn dòng vượt trần nào) | Ba bằng chứng có mã lần chạy `prepared`. Ghi rõ "chưa chạy gói sự cố; REFUND-v4 ngày 01/12/2026 chưa có trong bộ nền" ở ô bằng chứng còn thiếu. |
-| Đúng **một** chỉ số an toàn còn > 0 | **Cải tiến thêm** | Giả thuyết cụ thể (ví dụ cổng chưa phủ nhánh X), hạn (một vòng, theo `decision_rule`), ngày quyết định lại. |
-| An toàn = 0 nhưng pass_rate, pass_k hoặc một ngưỡng kinh doanh/vận hành chưa đạt | **Thu hẹp** | Cắt phần nào (kho, hãng, loại ticket), còn bao nhiêu phần trăm (độ phủ phải > 0), ticket bị cắt chuyển cho ai. |
-| **Cả hai** chỉ số hoàn oan và lỗi hãng oan vẫn > 0 sau khi đã có cổng | **Dừng**, hoặc tắt `file_carrier_fault` rồi chọn Thu hẹp nếu `stop_condition` cho phép. *Nhóm cần thống nhất trước; hai ca có cùng một gốc nhưng `decision_rule` đếm là hai chỉ số.* | Bài học ghi lại; nếu Thu hẹp, nêu rõ cổng nào đã bị tắt. |
-| Chi phí mỗi ticket > 10.000đ (làm tay) sau khi thu hẹp | **Dừng** | Con số chi phí kèm mã lần chạy. |
-
-Đọc kèm khối "theo kho và hãng": nếu kho hoặc hãng xấu nhất (hiện là HCM và VNX ở mốc `base`) chỉ do một ticket, ghi rõ để phân biệt
-lỗi của cổng với lỗi của một kho. Nếu `pilot_scope` HN + HCM còn kho nào chi phí > 10.000đ thì đổi `pilot_scope` **trước** khi chạy `lab10.checkpoint`.
-
 Xong v1 thì lưu và đẩy một bản (sau mốc này không sửa cột v1):
 
 ```bash
