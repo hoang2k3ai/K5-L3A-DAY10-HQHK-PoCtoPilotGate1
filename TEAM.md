@@ -31,7 +31,8 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 - Trưởng nhóm; vai **Vận hành và pháp lý**.
 - `config/operating_gates.json`: mục `operations` (PIC, `approver_id`, số người trực, `review_capacity_per_hour`, `max_queue_wait_minutes`, `stop_conditions`, `alert_channel`, `decision_note`, `review_sampling_pct`) và mục `legal` (`pii_fields_blocked_to_third_party`, `carrier_fault_requires_recorded_cause`).
 - `submission/submission.json`: `team`, `members`, `incident`, `decision_v1`, `decision_v2`, `three_lines`.
-- Phiếu B mục **B7.5** (cổng con người – vận hành – pháp lý + Runbook 1–3) và phần vận hành/chi phí của **B8**; Phiếu C mục **C12** (quyết định v2 + ba dòng bắt buộc) — chốt cùng cả bàn.
+- Phiếu B: PIC nhóm **7–9** trong checklist **B5**, phụ trách **B7.5** (cổng con người, vận hành, pháp lý và Runbook 1–3) và phần vận hành/chi phí của **B8**.
+- Phiếu C: theo dõi rủi ro chuyển sang REFUND-v4 ở **C10**, soát checklist vận hành/pháp lý và Runbook 4–5 ở **C11**, cùng cả bàn chốt quyết định v2 và ba dòng bắt buộc ở **C12**.
 - `TEAM.md`: bảng thành viên, danh tính Git, giữ repo sạch (không commit `runs/`, `.venv`, `__pycache__`).
 - Hỗ trợ bạn Quân (Sản phẩm và kinh doanh) phần Phiếu A Khối 1 và bộ ngưỡng trong `config/acceptance_criteria.json`.
 
@@ -39,23 +40,26 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Chọn eval card Lab 9 và ca chính **C-002** (`seeded_regression C-002@11`, FM-03 `ticket_trust`) ứng với `T-002@55`; ca dự phòng C-101 (prompt injection), C-113 (PII/số điện thoại), C-005 (cross-principal), C-006/C-103 (điều khoản hết hiệu lực).
 - Lập `docs/lab9-reference/` (README ánh xạ ngưỡng Lab 9 → Lab 10 + 3 khoảng trống, eval card, PRD v1.1, trace, eval case C-002) kèm nguồn.
-- Đề xuất bộ ngưỡng **0,91 / 0,91 / 6.000đ / ROI 0,5** và phần "Căn cứ ngưỡng": 110 trial → 0,91 ⇔ ≤9 lần trượt ⇔ đúng 1 ticket hỏng; pass^k 0,91 ⇔ ≤1 ticket không đạt 5/5; 6.000đ nằm dưới trần `cost_per_ticket_vnd_max` và tại trần ROI ≈ 0,67 > 0,5. Bàn đã chốt và ký bộ ngưỡng này lúc 2026-11-18 16:08:15 (commit `cbfa81c`, `Sign acceptance criteria`), trước lần chạy đánh giá đầu tiên.
+- Đề xuất bộ ngưỡng **0,91 / 0,91 / 6.000đ / ROI 0,5** và phần "Căn cứ ngưỡng". `pass_rate ≥ 0,91` cho phép tối đa 9 trial trượt trên 110 trial. `pass_k ≥ 0,91` cho phép tối đa 1 trong 22 ticket không đạt đủ 5/5. Tại mức chi phí 6.000đ/ticket, ROI ước tính khoảng 0,67, trên ngưỡng 0,5. Bàn đã chốt và ký bộ ngưỡng này lúc 2026-11-18 16:08:15 (commit `cbfa81c`, `Sign acceptance criteria`), trước lần chạy đánh giá đầu tiên.
 - Điền Khối 1 Phiếu A: A1 (câu 1.1 + 1.2 với `NV-OANH`/`NV-HANH`), A2 (hai cột, 5 dòng), A3 (phương án b), A4 (6 tiêu chí + 2 dòng ranh giới + 4 dòng soát + `business_ops` + ngày soát lại 30/11/2026).
 - Sửa lỗi toàn vẹn hash: `core.autocrlf=true` làm 19 file khoá lệch sha256; đặt `core.autocrlf false` + `core.eol lf`, `git rm --cached -r .` rồi `git reset --hard HEAD` → `integrity` chỉ còn báo 32 file `incidents/*` chưa pull (đúng phút 125 mới lấy thẻ).
-- Đặt danh tính Git `2A202603451 / 2A202603451@example.com`, gộp nhánh của Quân/Hùng/Khánh, giữ `main` = `origin/main`.
+- Điền `operations` và `legal` cho vòng 1, gồm người duyệt `NV-HANH`, 1 người trực, công suất 6 ca/giờ, thời gian chờ tối đa 60 phút và kiểm mẫu 10%. Khai báo nhóm, thành viên và thẻ `S2` trong `submission/submission.json`.
+- Soát B7.5 và C11 theo hai mốc: vòng 1 chạy HN và HCM, vòng 2 mở tất cả kho. Thống nhất ngưỡng cảnh báo và thao tác dừng, đưa `directive_override_rate` vào Runbook 4, và ghi đúng cách giảm pilot xuống 50% trong Runbook 5. Cùng bàn chốt C12 theo report S2.
+- Đặt danh tính Git `2A202603451 / 2A202603451@example.com`, gộp nhánh của Quân/Hùng/Khánh và gom bản nộp của nhóm.
 
 ### Bằng chứng
 
 - Commit: `f6146b7`, `60466b2` (TEAM.md); `1b39d54` (chọn eval card C-002 + `docs/lab9-reference/`); `fdbc007` (Phiếu A Khối 1 + bộ ngưỡng trình bàn); `7545d76`, `157ffca` (gộp nhánh, giữ TEAM.md 4 thành viên).
-- Dòng phiếu: Phiếu A mục A1–A4, gồm bảng "Căn cứ ngưỡng" trong A4.
-- File: `docs/lab9-reference/README.md`, `eval-card.md`, `PRD-v1.1.md`, `trace-case.md`, `eval-case-C-002.md`; `config/acceptance_criteria.json`; `TEAM.md`.
-- Máy đo: chưa có `runs/` — cố ý chưa chạy `eval`/`grade` trước khi ký (README luật 1).
-- AI: dùng trợ lý AI để đọc `lab10/*`, soát câu chữ Phiếu A, kiểm hash/line-ending và rà luật nộp bài; mọi ngưỡng và quyết định là của bàn.
+- Commit bổ sung: `8fabf93` (điền A5 sau khi ký), `c8dc60b` (cổng vận hành/pháp lý và thông tin nhóm/S2), `70c8743` (gom bản nộp, gồm sửa B7.5 và C11).
+- Dòng phiếu: A1–A5, gồm bảng "Căn cứ ngưỡng" ở A4. Phiếu B mục B5, B7.5 và B8. Phiếu C mục C10–C12.
+- File: `docs/lab9-reference/README.md`, `eval-card.md`, `PRD-v1.1.md`, `trace-case.md`, `eval-case-C-002.md`, `config/acceptance_criteria.json`, `config/operating_gates.json`, `submission/submission.json` và `TEAM.md`.
+- Máy đo: nhóm chạy đánh giá sau khi ký tiêu chí. Report gom tại `submission/runs/grade-report.md`, mã `R-S2-grade-20261118-174443-ae34d0`, ghi `PASS-VISIBLE`, chi phí 5.273đ/ticket, ROI 0,9 và không vượt trần kinh doanh/vận hành ở mốc `after`.
+- AI: dùng trợ lý AI để đọc `lab10/*`, soát Phiếu A và runbook B7.5/C11, kiểm hash/line-ending và rà luật nộp bài. Các ngưỡng và quyết định do bàn chốt.
 
 ### Exit ticket
 
 - Học được: ngưỡng phải suy ra từ trần vận hành (`ops_limits`, `ops_facts`) và từ câu hỏi "chấp nhận bao nhiêu ticket hỏng", không chọn theo cảm giác; và "ký trước khi đo" là thứ kiểm được bằng lịch sử git, không phải bằng lời.
-- Chưa chắc: 0,91 (⇔ 1 ticket hỏng trên 110 trial) đã đủ chặt để bảo vệ quyết định trước hội đồng chưa, và có nên siết pass^k riêng cho nhóm lỗi tiền/thẩm quyền thay vì dùng một ngưỡng chung cho mọi loại lỗi.
+- Chưa chắc: `pass_k ≥ 0,91` (tối đa 1 trong 22 ticket không đạt đủ 5/5) đã đủ chặt để bảo vệ quyết định trước hội đồng chưa, và nhóm lỗi tiền hoặc thẩm quyền có cần tiêu chí riêng hay không.
 
 ## LeHongQuan-2A202603705
 
