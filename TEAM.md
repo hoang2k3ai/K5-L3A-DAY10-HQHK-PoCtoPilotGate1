@@ -53,7 +53,7 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 - Commit bổ sung: `8fabf93` (điền A5 sau khi ký), `c8dc60b` (cổng vận hành/pháp lý và thông tin nhóm/S2), `70c8743` (gom bản nộp, gồm sửa B7.5 và C11).
 - Dòng phiếu: A1–A5, gồm bảng "Căn cứ ngưỡng" ở A4. Phiếu B mục B5, B7.5 và B8. Phiếu C mục C10–C12.
 - File: `docs/lab9-reference/README.md`, `eval-card.md`, `PRD-v1.1.md`, `trace-case.md`, `eval-case-C-002.md`, `config/acceptance_criteria.json`, `config/operating_gates.json`, `submission/submission.json` và `TEAM.md`.
-- Máy đo: nhóm chạy đánh giá sau khi ký tiêu chí. Report gom tại `submission/runs/grade-report.md`, mã `R-S2-grade-20261118-174443-ae34d0`, ghi `PASS-VISIBLE`, chi phí 5.273đ/ticket, ROI 0,9 và không vượt trần kinh doanh/vận hành ở mốc `after`.
+- Máy đo: nhóm chạy đánh giá sau khi ký tiêu chí. Report gom tại `submission/runs/grade-report.md`, mã `R-S2-grade-20261118-225940-ae34d0`, ghi `PASS-VISIBLE`, chi phí 5.273đ/ticket, ROI 0,9 và không vượt trần kinh doanh/vận hành ở mốc `after`.
 - AI: dùng trợ lý AI để đọc `lab10/*`, soát Phiếu A và runbook B7.5/C11, kiểm hash/line-ending và rà luật nộp bài. Các ngưỡng và quyết định do bàn chốt.
 
 ### Exit ticket
@@ -85,7 +85,7 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Commit: `d08395d` (CP1, `TEAM.md`), `24b7931` (đổi vai), `73d79ca` (nháp Phiếu A), `5489e98` (điền JSON), `c654b04` (chỉnh ngưỡng theo `ops_facts`), `0500b77` và `489edb8` (Phiếu B), `8a3a884` (`operating_gates.json` mục business), `9d04ed7` (C12).
 - Dòng phiếu: Phiếu A mục A1 (1.1), A3 (1.5), A4 (1.6, "Căn cứ ngưỡng"); Phiếu B mục B3, B4 (hai dòng ngoài kỹ thuật), B6 (dòng Kinh doanh), B7.4; Phiếu C mục C12, C3.1, C10.
-- Máy đo: chỉ chạy `eval` và `grade` sau khi ký (commit ký `cbfa81c`); mã lần chạy dùng làm bằng chứng cho S2 ở C12 là `R-S2-{before,prepared,after}-20261118-172549-ae34d0` (từ `R-S2-grade-20261118-172549-ae34d0`).
+- Máy đo: chỉ chạy `eval` và `grade` sau khi ký (commit ký `cbfa81c`); mã lần chạy dùng làm bằng chứng cho S2 ở C12 là `R-S2-{before,prepared,after}-20261118-225941-ae34d0` (từ `R-S2-grade-20261118-225940-ae34d0`).
 - AI: dùng trợ lý AI soạn nháp và đối chiếu số trong `data/world.json`, `lab10/ops.py`; ngưỡng cuối do nhóm quyết.
 
 ### Exit ticket
@@ -112,7 +112,7 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 ### Bằng chứng
 
 - Commit: `e75b347`, `6468aad` (xử lý merge conflict); `e553e65` (Vòng 1 `guards.py` + `B7.1–B7.3`); `c707c51` (`LAB 10: chot cong vong 1, quyet dinh v1`, hash `5249aa04`); `0168614` (Vòng 2 `S2`: `guards.py`, `monitors.py`, `operating_gates.json`, Phiếu C `C0–C2, C7–C8`).
-- Mã lần chạy: `R-base-before-20261118-162600-b45eeb` (base), `R-base-after-20261118-170236-6b9105` (cổng Vòng 1), `R-base-prepared-20261118-170337-6b9105` (chốt `prepared`), `R-S2-grade-20261118-172549-ae34d0` (S2 `prepared`), `R-S2-after-20261118-172549-ae34d0` & `R-S2-grade-20261118-172549-ae34d0` (S2 `PASS-VISIBLE`).
+- Mã lần chạy: `R-base-before-20261118-161705-bde05c` (base), `R-base-after-20261118-163931-0cad60` (cổng Vòng 1), `R-base-prepared-20261118-165856-2a46a2` (chốt `prepared`), `R-S2-grade-20261118-225940-ae34d0` (S2 `prepared`), `R-S2-after-20261118-225941-ae34d0` & `R-S2-grade-20261118-225940-ae34d0` (S2 `PASS-VISIBLE`).
 - File: `lab10/guards.py`, `lab10/monitors.py`, `config/operating_gates.json`, `templates/form-b-evaluation-gates.md`, `templates/form-c-incident.md`.
 - AI: dùng trợ lý AI để đọc cấu trúc repo, phân tích trace lỗi, gợi ý thiết kế cổng `guards.py` / `monitors.py` và rà soát đối chiếu số liệu; mọi con số và code đều được tự chạy kiểm chứng trực tiếp.
 
@@ -140,7 +140,7 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 ### Bằng chứng
 
 - Commit: `b237eaa` (B3 và B7.4 bằng số đo thật) và commit nháp vòng 2 (C5, C12, B5 dòng 6, `submission.json`, mục này).
-- Mã lần chạy (trên máy Khánh): `R-base-before-20261118-162600-b45eeb`, `R-base-after-20261118-165438-2a46a2` (HN + HCM), `R-base-after-20261118-165448-508836` (tất cả kho), `R-S2-after-20261118-170739-504c85` (S2 với `all` trước khi vá cổng), `R-S2-grade-20261118-172549-ae34d0` (S2 `PASS-VISIBLE`).
+- Mã lần chạy (trên máy Khánh): `R-base-before-20261118-164543-bc59d7`, `R-base-after-20261118-165438-2a46a2` (HN + HCM), `R-base-after-20261118-165448-508836` (tất cả kho), `R-S2-after-20261118-170739-504c85` (S2 với `all` trước khi vá cổng), `R-S2-grade-20261118-225940-ae34d0` (S2 `PASS-VISIBLE`).
 - Dòng phiếu: Phiếu B mục B3, B5 (dòng 6), B7.4; Phiếu C mục C5, C12.
 - AI: dùng trợ lý AI (Claude Code) để soạn nháp, chạy lệnh đo và đối chiếu số với `data/world.json`, `lab10/ops.py`; mọi con số trong phiếu lấy từ lần chạy thật, quyết định cuối do nhóm chốt.
 

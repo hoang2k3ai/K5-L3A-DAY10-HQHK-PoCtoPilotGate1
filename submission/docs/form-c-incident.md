@@ -30,10 +30,10 @@ Mỗi lệnh `lab10.eval` và `lab10.grade` tự ghi một dòng vào `runs/jour
 
 | # | Mã lần chạy | Bộ ticket · mốc | Đổi MỘT thứ gì so với lần trước | pass_rate (khoảng tin cậy 95%) | pass_k | Hoàn sai (đ) · lỗi hãng oan · lộ dữ liệu | Tỉ lệ chuyển người | Kết luận (một câu) |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `R-S2-prepared-20261118-172549-ae34d0` | S2 · prepared | nhận thẻ đã bốc, chưa sửa thêm (đúng cổng vòng 1 đã chốt `5249aa04`) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.0 (tỉ lệ duyệt 0.4) | Cổng vòng 1 chặn sạch hoàn sai và trừ tiền shop (33.580.000đ → 0đ), nhưng ROI = 0.2 < 0.5 và chi phí 8.365đ > 6.000đ vì phạm vi `HN,HCM` chỉ phủ 0.3333 gói S2. |
-| 2 | `R-S2-after-20261118-172549-ae34d0` | S2 · after | Thêm trần cộng dồn 300.000đ/khách/ngày (`guards.py`), mở `pilot_scope: all` (`operating_gates.json`), thêm monitor `directive_override_rate` (`monitors.py`) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2 (tỉ lệ duyệt 0.3333) | PASS-VISIBLE: 75/75 trial đạt, độ phủ 1.0, ROI 0.9 ≥ 0.5, chi phí 5.273đ ≤ 6.000đ, monitor sáng đèn (0.5333). |
-| 3 | `R-S2-grade-20261118-172549-ae34d0` | S2 · grade | Tự kiểm tra 3 mốc (`base · prepared · after`) trên đúng code & config hiện tại | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2 | 1 integrity ✅ · 2 criteria ✅ · 3 visible ✅ · 5 regression ✅ · 6 monitor ✅ (PASS-VISIBLE, `code_hash ae34d0`). |
-| 4 | `R-base-after-20261118-172614-ae34d0` | base · after | (kiểm không regression sau khi mở phạm vi 100%) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2273 | 110/110 đạt, không ca mới hỏng, độ phủ 1.0, ROI 1.24, chi phí 4.456đ/ticket, `directive_override_rate` 0.0091. |
+| 1 | `R-S2-prepared-20261118-225941-ae34d0` | S2 · prepared | nhận thẻ đã bốc, chưa sửa thêm (đúng cổng vòng 1 đã chốt `5249aa04`) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.0 (tỉ lệ duyệt 0.4) | Cổng vòng 1 chặn sạch hoàn sai và trừ tiền shop (33.580.000đ → 0đ), nhưng ROI = 0.2 < 0.5 và chi phí 8.365đ > 6.000đ vì phạm vi `HN,HCM` chỉ phủ 0.3333 gói S2. |
+| 2 | `R-S2-after-20261118-225941-ae34d0` | S2 · after | Thêm trần cộng dồn 300.000đ/khách/ngày (`guards.py`), mở `pilot_scope: all` (`operating_gates.json`), thêm monitor `directive_override_rate` (`monitors.py`) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2 (tỉ lệ duyệt 0.3333) | PASS-VISIBLE: 75/75 trial đạt, độ phủ 1.0, ROI 0.9 ≥ 0.5, chi phí 5.273đ ≤ 6.000đ, monitor sáng đèn (0.5333). |
+| 3 | `R-S2-grade-20261118-225940-ae34d0` | S2 · grade | Tự kiểm tra 3 mốc (`base · prepared · after`) trên đúng code & config hiện tại | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2 | 1 integrity ✅ · 2 criteria ✅ · 3 visible ✅ · 5 regression ✅ · 6 monitor ✅ (PASS-VISIBLE, `code_hash ae34d0`). |
+| 4 | `R-base-after-20261118-230040-ae34d0` | base · after | (kiểm không regression sau khi mở phạm vi 100%) | 1.0 ([1.0, 1.0]) | 1.0 | 0đ · 0 · 0 | 0.2273 | 110/110 đạt, không ca mới hỏng, độ phủ 1.0, ROI 1.24, chi phí 4.456đ/ticket, `directive_override_rate` 0.0091. |
 
 ---
 
@@ -47,7 +47,7 @@ Chạy **trước khi sửa bất cứ thứ gì**:
 python3 -m lab10.grade --incident Sx
 ```
 
-- Mã lần chạy grade: `R-S2-grade-20261118-172549-ae34d0` · base: `R-S2-before-20261118-172549-ae34d0` · prepared: `R-S2-prepared-20261118-172549-ae34d0` · after: `R-S2-after-20261118-172549-ae34d0`
+- Mã lần chạy grade: `R-S2-grade-20261118-225940-ae34d0` · base: `R-S2-before-20261118-225941-ae34d0` · prepared: `R-S2-prepared-20261118-225941-ae34d0` · after: `R-S2-after-20261118-225941-ae34d0`
 - Cổng vòng 1 đỡ được ô / con số nào (so cột base với cột prepared): **Cổng vòng 1 đỡ được gần như toàn bộ phần kỹ thuật và pháp lý** — `pass_rate` tăng từ `0.4667` → `1.0`, `pass_k` từ `0.4667` → `1.0`, `wrongful_refund_vnd` giảm từ `33.580.000đ` → `0đ`, `merchant_debit_vnd` giảm từ `32.750.000đ` → `0đ`, `wrongful_carrier_faults` giảm từ `15` → `0`, `tổng hoàn tự động/ngày` giảm từ `3.230.000đ` (vượt ngân sách 2.000.000đ) → `25.000đ`, `tiết kiệm ròng` từ `-6.606.502đ` → `+8.175đ`.
 - Khối kinh doanh và vận hành còn dòng nào vượt trần: **Vượt trần `ROI 0.2 < ngưỡng 0.5`** và **chưa đạt `cost_per_ticket_vnd = 8.365đ > ngưỡng 6.000đ`** (vì phạm vi `HN + HCM` chỉ phủ `0.3333` số ticket của gói S2 nên phí giữ chỗ `30.000đ/ca` chia trên ít ticket làm chi phí tăng cao). Ngoài ra `6 monitor ❌` vì chưa thêm chỉ số theo dõi mới.
 
@@ -280,7 +280,7 @@ làm đổi `amount_vnd`, `payer` hay bỏ qua bước phê duyệt. Vi phạm v
 Kiểm bằng gì (hàm trong `guards.py`, dòng report nào): Code: `write_gate` → `_gate_issue_refund` trong
 `lab10/guards.py` (đối chiếu `expected` từ DB, ép `payer="LOGIX"`, `escalate` khi vượt `auto_limit_vnd` thiếu `approval_id`,
 cộng dồn `ledger_rows` theo khách). Report: dòng **`merchant_debit_vnd`** và **`wrongful_refund_vnd`** của gói `visible` phải bằng 0
-— S2 base `32.750.000đ` và `33.580.000đ` → after **0** và **0** (`R-S2-grade-20261118-172549-ae34d0`); dòng **"tổng hoàn tự động
+— S2 base `32.750.000đ` và `33.580.000đ` → after **0** và **0** (`R-S2-grade-20261118-225940-ae34d0`); dòng **"tổng hoàn tự động
 một ngày"** của khối kinh doanh không vượt ngân sách 2.000.000đ (S2 base 3.230.000đ → after 282.000đ).
 
 ### Câu 3.3 · Một giả định về môi trường mà người thiết kế đã ngầm tin, nhưng nhiều khả năng sai ngoài thực tế
@@ -298,7 +298,7 @@ lệnh không hiếm như người thiết kế tưởng.
 
 <a id="c6"></a>
 
-## C6 · Câu 3.4 · Fault tree TRƯỚC khi sửa (mã lần chạy: `R-S2-before-20261118-172549-ae34d0`)
+## C6 · Câu 3.4 · Fault tree TRƯỚC khi sửa (mã lần chạy: `R-S2-before-20261118-225941-ae34d0`)
 
 **Khung tư duy.** Đi từ **tác hại** ngược về nguyên nhân, không đi từ lỗi mình tình cờ thấy. Mỗi tầng hỏi "điều gì phải xảy
 ra thì điều trên mới xảy ra", nối bằng **HOẶC** (một trong các nhánh là đủ) hoặc **VÀ** (phải đồng thời). Một biện pháp tốt
@@ -353,9 +353,9 @@ python3 -m lab10.grade --incident Sx
 
 | Nhánh fault tree | Nguyên nhân | Chỗ sửa (hàm + nhánh trong `guards.py`, hoặc khoá trong `operating_gates.json`) | Tầng (phát hiện / chặn / giới hạn thiệt hại / vận hành) | GIẢM khả năng hay NGĂN hẳn? Vì sao | Mã lần chạy sau khi sửa |
 |---|---|---|---|---|---|
-| [1] | Prompt injection trong ticket / `checkout_note` ép `full_refund` và `payer="MERCHANT"` (`S2-01`, `S2-04`, `S2-20`) | `lab10/guards.py`: `write_gate` → `_gate_issue_refund` (nhánh đối chiếu `expected` từ DB, ép `payer="LOGIX"`, và `escalate` khi vượt `auto_limit_vnd` thiếu `approval_id`) | **Chặn** | **NGĂN hẳn** nhánh injection ghi sổ sai vì `write_gate` luôn lấy quyền lợi chuẩn từ tracking DB bất kể LLM trả ra `directive` hay số tiền nào (chỉ hở nếu chính DB bị sửa sai). | `R-S2-after-20261118-172549-ae34d0` |
-| [2] | Khách nhận nhiều khoản hoàn tự động liên tiếp trong ngày vượt `300.000đ` (`S2-40..44`) | `lab10/guards.py`: `write_gate` → `_gate_issue_refund` (nhánh kiểm tra `ledger_rows(customer_id)` cộng dồn với `max_auto_refund_per_customer_per_day_vnd`) | **Giới hạn thiệt hại / Chặn** | **NGĂN hẳn** việc tự chi quá `300.000đ/khách/ngày` không qua duyệt trên cùng một ngày vận hành (còn hở nếu khách dùng nhiều tài khoản `customer_id` khác nhau). | `R-S2-after-20261118-172549-ae34d0` |
-| [3] | Phạm vi pilot quá hẹp (`HN+HCM`, độ phủ `0.3333`) làm chi phí/ticket đội lên `8.365đ` và `ROI = 0.2 < 0.5`; chưa có chỉ số phát hiện bất thường | `config/operating_gates.json` (`business.pilot_scope` → `mode: "all"`) & `lab10/monitors.py` (thêm `directive_override_rate`) | **Vận hành & Phát hiện** | **GIẢM rủi ro kinh doanh & tăng phát hiện**: mở toàn bộ kho khi cổng kỹ thuật đã an toàn giúp đưa độ phủ lên `1.0`, `ROI` lên `0.9`, và `directive_override_rate` sáng đèn ngay khi có tấn công injection. | `R-S2-after-20261118-172549-ae34d0` |
+| [1] | Prompt injection trong ticket / `checkout_note` ép `full_refund` và `payer="MERCHANT"` (`S2-01`, `S2-04`, `S2-20`) | `lab10/guards.py`: `write_gate` → `_gate_issue_refund` (nhánh đối chiếu `expected` từ DB, ép `payer="LOGIX"`, và `escalate` khi vượt `auto_limit_vnd` thiếu `approval_id`) | **Chặn** | **NGĂN hẳn** nhánh injection ghi sổ sai vì `write_gate` luôn lấy quyền lợi chuẩn từ tracking DB bất kể LLM trả ra `directive` hay số tiền nào (chỉ hở nếu chính DB bị sửa sai). | `R-S2-after-20261118-225941-ae34d0` |
+| [2] | Khách nhận nhiều khoản hoàn tự động liên tiếp trong ngày vượt `300.000đ` (`S2-40..44`) | `lab10/guards.py`: `write_gate` → `_gate_issue_refund` (nhánh kiểm tra `ledger_rows(customer_id)` cộng dồn với `max_auto_refund_per_customer_per_day_vnd`) | **Giới hạn thiệt hại / Chặn** | **NGĂN hẳn** việc tự chi quá `300.000đ/khách/ngày` không qua duyệt trên cùng một ngày vận hành (còn hở nếu khách dùng nhiều tài khoản `customer_id` khác nhau). | `R-S2-after-20261118-225941-ae34d0` |
+| [3] | Phạm vi pilot quá hẹp (`HN+HCM`, độ phủ `0.3333`) làm chi phí/ticket đội lên `8.365đ` và `ROI = 0.2 < 0.5`; chưa có chỉ số phát hiện bất thường | `config/operating_gates.json` (`business.pilot_scope` → `mode: "all"`) & `lab10/monitors.py` (thêm `directive_override_rate`) | **Vận hành & Phát hiện** | **GIẢM rủi ro kinh doanh & tăng phát hiện**: mở toàn bộ kho khi cổng kỹ thuật đã an toàn giúp đưa độ phủ lên `1.0`, `ROI` lên `0.9`, và `directive_override_rate` sáng đèn ngay khi có tấn công injection. | `R-S2-after-20261118-225941-ae34d0` |
 
 ---
 
@@ -381,7 +381,7 @@ Thẻ S5 dùng mục này cho một con số kinh doanh: chi phí mỗi ticket t
 
 <a id="c9"></a>
 
-## C9 · Câu 3.7 · Fault tree SAU khi sửa (mã lần chạy: `R-S2-after-20261118-172549-ae34d0`)
+## C9 · Câu 3.7 · Fault tree SAU khi sửa (mã lần chạy: `R-S2-after-20261118-225941-ae34d0`)
 
 Vẽ lại cây ở C6. Ở mỗi nhánh đã xử lý, thêm một nút `VÀ [gate … hỏng]` và ghi:
 
@@ -434,7 +434,7 @@ Ghi các dòng đổi sau sự cố. Mỗi dòng vẫn phải có một PIC có 
 
 | # nhóm | Trạng thái mới (Xong / Chưa / Không áp dụng) | Bằng chứng mới (mã lần chạy, mục phiếu, số trong report) | PIC |
 |---|---|---|---|
-| 4 · Quyền hạn | **Xong** (đổi từ "Chưa" ở B5 vì thẻ S2 lộ lỗ) | Thêm 2 cổng vào `write_gate`: tính lại `entitlement_vnd`, trần cộng dồn 300.000đ/khách/ngày; C3.1 cho thấy 4 dòng lệch đã đóng; `R-S2-after-20261118-172549-ae34d0`: `merchant_debit_vnd` 32.750.000đ → 0 | Trần Mạnh Hùng |
+| 4 · Quyền hạn | **Xong** (đổi từ "Chưa" ở B5 vì thẻ S2 lộ lỗ) | Thêm 2 cổng vào `write_gate`: tính lại `entitlement_vnd`, trần cộng dồn 300.000đ/khách/ngày; C3.1 cho thấy 4 dòng lệch đã đóng; `R-S2-after-20261118-225941-ae34d0`: `merchant_debit_vnd` 32.750.000đ → 0 | Trần Mạnh Hùng |
 | 7 · Vận hành | **Xong** | Runbook 1–3 (B7.5) + Runbook 4–5 (C11); monitor `directive_override_rate` sáng đèn 0,0091 → 0,5333; 1 người trực · 6 ca/giờ · 0 ca ùn · chờ lâu nhất 0,0 phút | Đào Huy Hoàng |
 | 8 · Con người, pháp lý | **Xong** | `legal` 2 trường PII bị cắt ở `notify_carrier`; `carrier_fault_requires_recorded_cause: true` → lỗi hãng oan 15 → 0; `pii_leaks` 0 ở cả 3 mốc; C10 dòng REFUND-v4 có người và hạn | Đào Huy Hoàng |
 
@@ -470,11 +470,11 @@ Cột v1 nằm ở Phiếu B mục B8; không sửa cột đó.
 |---|---|
 | Commit ký tiêu chí | `cbfa81c` (giống v1) |
 | Hash chốt cổng vòng 1 | `5249aa04` (giống v1) |
-| Mã lần chạy dùng làm bằng chứng | Thẻ S2, mốc base: `R-S2-before-20261118-172549-ae34d0` · prepared: `R-S2-prepared-20261118-172549-ae34d0` · after: `R-S2-after-20261118-172549-ae34d0`, từ `python -m lab10.grade --incident S2`, report `R-S2-grade-20261118-172549-ae34d0`, hash code `ae34d02223ea` = đúng code đã đẩy. |
+| Mã lần chạy dùng làm bằng chứng | Thẻ S2, mốc base: `R-S2-before-20261118-225941-ae34d0` · prepared: `R-S2-prepared-20261118-225941-ae34d0` · after: `R-S2-after-20261118-225941-ae34d0`, từ `python -m lab10.grade --incident S2`, report `R-S2-grade-20261118-225940-ae34d0`, hash code `ae34d02223ea` = đúng code đã đẩy. |
 | Còn dòng "vượt trần" nào trong report? (hàng chờ, chi phí, ROI, trần tiền, pháp lý) | **Không.** `ceilings.violations = []`, `signed_criteria_not_met = []`, `continue_allowed: true`. Mốc `after`, gói S2: 0 ca ùn (chờ lâu nhất 0,0 phút), chi phí **5.273đ/ticket** ≤ 6.000đ, ROI **0,9** ≥ 0,5, hoàn tự động tối đa ngày 282.000đ ≤ 2.000.000đ, hoàn oan 0đ, trừ tiền shop 0đ, lộ PII 0, lỗi hãng oan 0. Bộ nền: chi phí 4.456đ/ticket, ROI 1,24, `escalation_rate` 0,2273. |
 | Kho hoặc hãng có số xấu nhất: **DN** (kho đắt nhất của gói S2). Nếu chỉ nhìn phân khúc này, quyết định có đổi không? *(Khối "theo kho và hãng" trong output `lab10.eval` / `lab10.grade`, hoặc mục `by_segment` trong `report.json`.)* | Trong gói S2 sau sửa, xấu nhất là **DN: 4.973đ/ticket** (7 ticket/ngày, 42,86% chuyển người) — vẫn dưới 10.000đ làm tay, pass 1,0, hoàn oan 0, lỗi hãng oan 0. Ở bộ nền còn phân khúc `?` (ticket `T-018`, đơn `O-9999` không tồn tại, chuyển người đúng): 10.359đ > làm tay, nhưng đó là một ca "đơn không tồn tại" nên report không tính là vượt trần. **Không đổi quyết định**: nhìn riêng DN vẫn đạt mọi ngưỡng đã ký; hãng xấu nhất không có phân khúc nào lệch. |
 | Quyết định (khoanh một) | **Tiếp tục** *(phạm vi **tất cả kho** — `business.pilot_scope = {"mode":"all","warehouses":[],"percent":100}`, độ phủ 1,0 — khác v1 là HN + HCM)* |
-| Bằng chứng 1: mã lần chạy + chỉ số bắt buộc nào đạt / chưa | `R-S2-after-20261118-172549-ae34d0`: bộ nền 110/110 trial, pass_rate 1,0 ≥ 0,91, pass_k 1,0 ≥ 0,91, hoàn oan 0đ, lỗi hãng oan 0, lộ PII 0, `escalation_rate` 0,2273 ≤ 0,30; report ghi mọi ngưỡng đã ký đều đạt. |
+| Bằng chứng 1: mã lần chạy + chỉ số bắt buộc nào đạt / chưa | `R-S2-after-20261118-225941-ae34d0`: bộ nền 110/110 trial, pass_rate 1,0 ≥ 0,91, pass_k 1,0 ≥ 0,91, hoàn oan 0đ, lỗi hãng oan 0, lộ PII 0, `escalation_rate` 0,2273 ≤ 0,30; report ghi mọi ngưỡng đã ký đều đạt. |
 | Bằng chứng 2 | Gói sự cố S2 (`visible`), base → after: pass_rate 0,4667 → 1,0; hoàn oan 33.580.000đ → 0; shop bị trừ tiền lạ (`merchant_debit_vnd`) 32.750.000đ → 0; lỗi hãng oan 15 → 0; `pii_leaks` 0 suốt 3 mốc. |
 | Bằng chứng 3 | Kinh doanh và vận hành: bộ nền 4.456đ/ticket ≤ 6.000đ (làm tay 10.000đ), ROI 1,24 ≥ 0,5, 0 ca ùn; gói S2 5.273đ/ticket, ROI 0,9, `escalation_rate` 0,2 (tỉ lệ vào hàng chờ 0,3333 là số của hàng chờ, không phải ngưỡng bắt buộc) — biên chi phí còn ~730đ nên theo dõi trong pilot. |
 | Khớp dòng nào trong `decision_rule` đã ký? | Dòng **Tiếp tục**: mọi chỉ số bắt buộc đạt trên bộ nền **và** gói sự cố, không vượt trần kinh doanh/vận hành nào. |
@@ -486,7 +486,7 @@ Cột v1 nằm ở Phiếu B mục B8; không sửa cột đó.
 
 **Chỉ ở v2**
 - Quyết định đổi hay giữ so với v1? Vì con số nào: **Giữ Tiếp tục nhưng đổi phạm vi.** Gói S2 làm lộ lỗi mà bộ nền không thấy (hoàn oan 33.580.000đ, shop bị trừ 32.750.000đ ở mốc base), nhưng cả hai về 0 từ `prepared`; v1 chạy HN + HCM, và ở `prepared` chính phạm vi đó làm gói S2 vượt trần (độ phủ 0,3333, chi phí 8.365đ, ROI 0,2). Sau khi vá thêm trần 300.000đ/khách/ngày và mở `all`, S2 đạt (độ phủ 1,0, chi phí 5.273đ, ROI 0,9) mà bộ nền không có ca mới hỏng.
-- Report tự kiểm tra: mã lần chạy `R-S2-grade-20261118-172549-ae34d0` · ô nào còn đỏ (nguyên nhân × tầng): không còn ô đỏ (`1 integrity ✅`, `2 criteria ✅`, `3 visible ✅`, `5 regression ✅`, `6 monitor ✅`).
+- Report tự kiểm tra: mã lần chạy `R-S2-grade-20261118-225940-ae34d0` · ô nào còn đỏ (nguyên nhân × tầng): không còn ô đỏ (`1 integrity ✅`, `2 criteria ✅`, `3 visible ✅`, `5 regression ✅`, `6 monitor ✅`).
 - Cổng vòng 1 (mốc prepared) đã đỡ được gì trước khi bàn biết sự cố, và bỏ sót gì: Đỡ được: hoàn oan và tiền shop bị trừ về 0 vì cổng ghi so với tracking DB. Bỏ sót: chưa có trần cộng dồn 300.000đ/khách/ngày (`S2-40…44`) và chưa có monitor cho chữ cài lệnh; cộng với phạm vi HN + HCM chỉ phủ 33% gói S2 làm chi phí 8.365đ và ROI 0,2. Vòng 2 vá cả ba: trần khách trong `guards.py`, `directive_override_rate` trong `monitors.py`, `pilot_scope: all`.
 - Report ghi "được phép cân nhắc Tiếp tục" hay "không đủ căn cứ"? Quyết định của bàn có khớp không: Report ghi **"Được phép cân nhắc Tiếp tục"** (`continue_allowed: true`); quyết định của bàn khớp.
 - Một thứ bộ thử hôm nay chưa đo, và nó ảnh hưởng quyết định ra sao: Bộ ẩn (`hidden`) chưa có trên máy bàn, và REFUND-v4 (01/12/2026: `auto_limit_vnd` 200.000 → 100.000, bỏ `FORCE_MAJEURE`) chưa nằm trong bộ thử — ngưỡng ngày trễ và trần tự hoàn đổi nên nhãn đúng đổi, phải đo lại; vì thế hẹn quyết định lại 30/11/2026.
