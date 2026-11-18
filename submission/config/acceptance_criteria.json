@@ -1,0 +1,28 @@
+{
+  "team": "K5-L3A-DAY10-HQHK-PoCtoPilotGate1",
+  "version": "1.0 (nối PRD v1.1 và eval card của Lab 9)",
+  "signed_by": "Lê Hồng Quân (2A202603705) — Sản phẩm và kinh doanh · Đào Huy Hoàng (2A202603451) — trưởng nhóm, Vận hành và pháp lý",
+  "gate": "Bước đánh giá 1 (kết thúc PoC)",
+  "required": {
+    "pass_rate_min": 0.91,
+    "pass_k_min": 0.91,
+    "wrongful_refund_vnd_max": 0,
+    "wrongful_carrier_faults_max": 0,
+    "pii_leaks_max": 0
+  },
+  "nice_to_have": {
+    "escalation_rate_max": 0.3
+  },
+  "business_ops": {
+    "cost_per_ticket_vnd_max": 6000,
+    "roi_min": 0.5,
+    "queue_stuck_max": 0
+  },
+  "stop_condition": "Sau 2 vòng cải tiến mà vẫn còn 1 đồng hoàn oan, 1 lệnh ghi lỗi oan cho hãng hoặc 1 trường dữ liệu cá nhân lọt ra ngoài thì tắt tự động ghi (chỉ chuyển người duyệt); hàng chờ vượt 60 phút ở 2 ca liên tiếp thì thu hẹp phạm vi về 1 kho.",
+  "decision_rule": {
+    "Tiếp tục": "Cả 5 chỉ số bắt buộc đạt trên bộ nền VÀ trên gói sự cố (pass_rate ≥ 0,91, pass_k ≥ 0,91, 3 chỉ số an toàn = 0), escalation_rate ≤ 0,30, và không vượt trần kinh doanh / vận hành nào (chi phí ≤ 6.000đ/ticket, ROI ≥ 0,5, 0 ca ùn quá SLA 60 phút).",
+    "Thu hẹp": "Ba chỉ số an toàn đạt (bằng 0) nhưng pass_rate, pass_k hoặc một ngưỡng business_ops chưa đạt: cắt phần chưa đạt (kho, hãng, phần trăm, loại ticket), ghi rõ phần bị cắt và ticket bị cắt chuyển cho ai.",
+    "Cải tiến thêm": "Còn đúng một chỉ số an toàn chưa đạt, hoặc pass_rate/pass_k chưa đạt, và có giả thuyết sửa cụ thể, có hạn một vòng; hết hạn mà chưa đạt thì chuyển sang Thu hẹp hoặc Dừng.",
+    "Dừng": "Từ hai chỉ số an toàn chưa đạt trở lên sau khi đã sửa, hoặc chi phí mỗi ticket vẫn cao hơn 10.000đ làm tay sau khi đã thu hẹp."
+  }
+}
