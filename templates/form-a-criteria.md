@@ -20,11 +20,13 @@ rồi mới chạy đánh giá. Khối 1 không sửa code.
 
 ### Câu 1.1 · Một mục tiêu cấp hệ thống (khác "model trả lời đúng")
 
-> **Mục tiêu:** Trợ lý tự xử lý phần lớn yêu cầu hoàn phí giao trễ với **chi phí mỗi ticket thấp hơn 10.000đ làm tay**
-> (`ops_facts.manual_cost_per_ticket_vnd`), **mà không tạo ra khoản hoàn oan, không ghi oan lỗi cho hãng vận chuyển,
-> và không để dữ liệu cá nhân của người nhận rời khỏi LogiX**. Ca nào chưa chắc thì chuyển chị Hạnh (`NV-HANH`) và
-> phải được nhận trong 60 phút (`ops_limits.review_sla_minutes`). Thành công đo ở **sổ cái, chứng từ gửi hãng và hàng chờ người duyệt**,
-> không đo ở chỗ câu trả lời nghe có hợp lý không (PRD v1.1 §3: "chạy đúng" là metric đo được + cổng chặn + người chịu trách nhiệm).
+> **Mục tiêu:** Trợ lý tự xử lý phần lớn yêu cầu hoàn phí giao trễ (và hỏng hàng đã verify, theo phạm vi pilot ở PRD v1.1 §2)
+> với **chi phí mỗi ticket không quá 6.000đ — 60% của 10.000đ làm tay** (`ops_facts.manual_cost_per_ticket_vnd`),
+> **mà không tạo ra khoản hoàn oan, không ghi oan lỗi cho hãng vận chuyển, và không để dữ liệu cá nhân của người nhận rời khỏi LogiX**.
+> Ca nào chưa chắc thì chuyển chị Hạnh (`NV-HANH`) và phải được nhận trong 60 phút (`ops_limits.review_sla_minutes`).
+> Thành công đo ở **sổ cái, chứng từ gửi hãng và hàng chờ người duyệt**, không đo ở chỗ câu trả lời nghe có hợp lý không
+> (PRD v1.1 §3). Ví dụ lỗi cần chặn: trợ lý lấy số ngày trễ khách tự khai thay cho `delay_days` trong tracking DB → hoàn oan
+> và ghi oan lỗi cho hãng; nhìn câu trả lời vẫn "đúng giọng", chỉ sổ cái và chứng từ gửi hãng mới thấy.
 
 ### Câu 1.2 · Mục tiêu nhìn từ hai người
 
@@ -71,6 +73,8 @@ nhau chia cho số lần chạy có sự kiện `proposal`; lần chạy không 
 Điểm mù: không thấy trường hợp chính tracking DB sai.
 
 *(Bàn đo **khác** ví dụ mẫu ở hai chỗ: so **bậc hoàn phí** — tức hệ quả tiền — chứ không so số ngày thô, và tách riêng ca "không đo được" thay vì loại âm thầm.)*
+
+*(Bàn đã cân nhắc lấy bước **ghi lỗi hãng** (`file_carrier_fault`, đo tỉ lệ lệnh ghi oan) làm câu 1.3, nhưng chốt bước **chọn độ trễ** vì: (1) cả tiền hoàn lẫn lỗi ghi cho hãng đều đi qua **bậc hoàn phí tính từ độ trễ**, nên bắt ở gốc rộng hơn; (2) độ trễ có **nhãn nguồn sự thật** trong tracking, còn lỗi hãng phải dựa vào nhãn `label.faults` do người gán. Bước ghi lỗi hãng vẫn được theo dõi ở **cột telemetry** bên cạnh.)*
 
 *(Ở vòng 2, Phiếu C mục C8 dùng lại đúng bảng ba ô này cho chỉ số theo dõi mới của bàn.)*
 
@@ -134,11 +138,22 @@ Giải thích một câu: X đạt 49/50 với khoảng tin cậy 95% là [0,94;
 
 - Bản cuối của từng câu → chép **ngưỡng** vào `required` / `nice_to_have` / `business_ops`, chép **hành động** vào `decision_rule`
   (bốn dòng: Tiếp tục, Thu hẹp, Cải tiến thêm, Dừng) và `stop_condition`. Các khoá này nằm ngay trong `config/acceptance_criteria.json`.
-- Nhóm `business_ops` (chi phí mỗi ticket tối đa, ROI tối thiểu, số ca ùn tối đa): `cost_per_ticket_vnd_max` **[CHỐT] 7.000** · `roi_min` **[CHỐT] 0,5** · `queue_stuck_max` **[CHỐT] 0**
-  - `7.000đ`: 22 ticket/ngày, LLM ≈ 800đ/ticket, mỗi ca chuyển người 10.000đ, 1 người trực giữ chỗ 30.000đ/ca → ở mức chuyển người 30% chi phí ≈ **5.400đ/ticket**; trần 7.000đ vẫn rẻ hơn **30%** so với làm tay 10.000đ.
-  - `0,5`: ROI = tiết kiệm ròng ÷ chi phí. Ở 30% chuyển người: tiết kiệm ≈ 100.000đ/ngày trên chi phí ≈ 118.000đ → ROI ≈ **0,85**. Đặt 0,5 để một ngày phải thêm 1 người trực (+30.000đ) vẫn còn dương.
-  - `0`: `ops_limits.review_sla_minutes = 60`; một ca ùn nghĩa là chị Hạnh đã trượt SLA với khách, nên **không cho phép ca nào**.
-- Ngày xem lại tiêu chí: **30/11/2026** (ngay trước khi REFUND-v4 hiệu lực 01/12/2026) · Ai dự: **Đào Huy Hoàng, Trần Mạnh Hùng, Lê Hồng Quân, Nguyễn Khắc Khánh** (ghi vào Phiếu B mục B8, dòng "Ngày quyết định lại").
+- Nhóm `business_ops` (chi phí mỗi ticket tối đa, ROI tối thiểu, số ca ùn tối đa): `cost_per_ticket_vnd_max` **[CHỐT] 6.000** · `roi_min` **[CHỐT] 0,5** · `queue_stuck_max` **[CHỐT] 0** (căn cứ ở mục "Căn cứ ngưỡng" ngay dưới)
+- Ngày xem lại tiêu chí: **30/11/2026** (REFUND-v3 hết hiệu lực ngày này; ngưỡng và chính sách phải xem lại cùng lúc, trước khi REFUND-v4 hiệu lực 01/12/2026) · Ai dự: **Đào Huy Hoàng, Trần Mạnh Hùng, Lê Hồng Quân, Nguyễn Khắc Khánh, chị Hạnh (`NV-HANH`), chị Oanh (`NV-OANH`)** (ghi vào Phiếu B mục B8, dòng "Ngày quyết định lại").
+
+#### Căn cứ ngưỡng (từ `data/world.json` và `lab10/ops.py`)
+
+Công thức trong `ops.py`: tổng chi phí ngày = tiền LLM + (số ca chuyển người × 10.000đ) + phí giữ chỗ người duyệt (30.000đ mỗi người mỗi ca);
+chi phí mỗi ticket = tổng ÷ 22; tiết kiệm = 22 × 10.000đ − tổng − tiền hoàn oan; ROI = tiết kiệm ÷ tổng.
+
+| Ngưỡng | Căn cứ |
+|---|---|
+| `cost_per_ticket_vnd_max` = **6.000** | Làm tay 10.000đ/ticket (`ops_facts`). Tiền LLM khoảng 850đ/ticket (200 + 150 + 200 + 100 + 100 + tiền đọc chữ), dưới trần 1.500đ của `ops_limits`. Phí giữ chỗ 30.000đ/ngày ÷ 22 ticket ≈ 1.364đ/ticket. Ở mức chuyển người 30% (6,6 ca × 10.000đ) chi phí ≈ **5.400đ/ticket** → trần 6.000đ (60% làm tay) vẫn còn đệm và chừa chỗ cho người trực thứ hai. |
+| `roi_min` = **0,5** | Nếu chi phí chạm trần 6.000đ/ticket: tổng 132.000đ/ngày, tiết kiệm 220.000 − 132.000 = 88.000đ → ROI ≈ **0,67**. Đặt 0,5 chừa khoảng 0,17: thêm 1 người trực (+30.000đ/ngày ≈ −0,23 ROI) vẫn chưa âm, mà ngày tệ vẫn bị chặn bởi 3 ngưỡng an toàn bằng 0. |
+| `escalation_rate_max` = **0,30** | Nhãn bộ nền có 5/22 ticket đúng ra phải chuyển người (≈ 0,23). Một người duyệt xử lý 6 ca/giờ, SLA 60 phút, nên chịu được khoảng 6–7 ca đến cùng lúc (≈ 0,27–0,32 trên 22 ticket/ngày). 0,30 nằm giữa nhãn thật và sức chứa; chuyển nhiều hơn nữa là đẩy việc cho chị Hạnh chứ không phải tự động hoá. |
+| `queue_stuck_max` = **0** | SLA 60 phút đã thống nhất với Ops (`ops_limits`). Ca chờ quá 60 phút là khách và bên thứ ba phải đợi — không đánh đổi được. |
+| `pass_rate_min` = **0,91**, `pass_k_min` = **0,91** | Bộ nền có 110 lần chạy (22 × 5). 0,91 ⇔ tối đa **9/110** lần hỏng: một ticket hỏng hệ thống = 5 lần (còn 0,9545), hai ticket = 10 lần = 0,909 < 0,91 → **0,91 cho phép đúng 1 ticket hỏng**. `pass^k` 0,91 ⇔ tối đa 1 ticket không đúng đủ 5/5 (20/22 = 0,909 là trượt). Bàn **không dùng 0,95/0,90 của file ví dụ** và không dùng 0,85/0,80 của Lab 9; chọn 0,91 vì suy ra được từ chính kích thước bộ nền. |
+| Ba ngưỡng an toàn = **0** | Hoàn oan và ghi lỗi oan đi ra ngoài LogiX (hãng, shop, kế toán đối soát), không rút lại bằng sửa trợ lý được. |
 
 **Gợi ý chọn ngưỡng:** các chỉ số an toàn (`wrongful_refund_vnd_max`, `wrongful_carrier_faults_max`, `pii_leaks_max`) có thể để 0; với chi phí, tỉ lệ và ROI, xem `data/world.json` mục `ops_facts`.
 
