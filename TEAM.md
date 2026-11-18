@@ -82,3 +82,31 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Học được: (bạn tự viết)
 - Chưa chắc: (bạn tự viết)
+
+## TranManhHung-2A202603496
+
+### Phần việc phụ trách
+
+- Vai **Gate Engineer** (Kỹ sư cổng).
+- Code và chỉ số: `lab10/guards.py` (Vòng 1 và Vòng 2), `lab10/monitors.py` (chỉ số theo dõi mới Vòng 2), phối hợp điều chỉnh `config/operating_gates.json` (`pilot_scope`).
+- Phiếu B: mục **B0** (dòng 1–3), **B1** (câu 2.1), **B2** (câu 2.2 dò `T-002@55`), **B7.1–B7.3** (câu 2.6–2.8), **B8** (chốt cổng Vòng 1 & cột quyết định v1).
+- Phiếu C (thẻ **S2**): mục **C0** (nhật ký lần chạy Vòng 2), **C1** (câu 3.0 mốc `prepared`), **C2** (câu 3.1 dò trace `S2-01`, `S2-04`, `S2-20`, `S2-44`), **C7** (câu 3.5 bảng sửa), **C8** (câu 3.6 chỉ số `directive_override_rate`).
+
+### Đóng góp cụ thể
+
+- Xử lý xung đột Git (`TEAM.md`, `templates/form-b-evaluation-gates.md`) và khắc phục lỗi sai khác xuống dòng `LF`/`CRLF` trên Windows (`core.autocrlf false`) để `criteria verify` và `1 integrity` đạt chuẩn SHA-256.
+- Đo mốc nền `base` và dò trace `T-002@55` (xếp loại **lỗi chìm** từ đầu vào `model_override`), hoàn thiện **B0–B2** trong Phiếu B.
+- Viết 3 cổng phòng ngừa Vòng 1 trong `lab10/guards.py`: ghim chính sách hiệu lực theo ngày (`pre_guard` + `H.effective_policy`), chặn ghi đúp và đối chiếu quyền lợi chuẩn từ DB ở `issue_refund` (`_gate_issue_refund`), kiểm tra điều kiện/đúng kiện phạt hãng ở `file_carrier_fault`, lọc PII `recipient_contact` ở `notify_carrier`. Chạy kiểm tra 2 ticket hiểm `--adhoc` (**B7.3**) và chốt mốc `prepared` bằng `lab10.checkpoint` (`5249aa04`).
+- Vòng 2 (thẻ **S2**): chạy `grade --incident S2` mốc `prepared` (cổng Vòng 1 đã chặn sạch `33.580.000đ` hoàn sai & `32.750.000đ` trừ tiền oan shop, chỉ còn vướng ROI `0.2 < 0.5` do độ phủ hẹp và thiếu monitor). Bổ sung nhánh kiểm tra trần hoàn tự động `300.000đ/khách/ngày` trong `guards.py`, mở `pilot_scope` thành `all` trong `config/operating_gates.json`, và viết mới chỉ số `directive_override_rate` trong `lab10/monitors.py` → đạt **`PASS-VISIBLE`** (`1 integrity ✅`, `2 criteria ✅`, `3 visible ✅`, `5 regression ✅`, `6 monitor ✅`, `13/13` unit tests `OK`).
+
+### Bằng chứng
+
+- Commit: `e75b347`, `6468aad` (xử lý merge conflict); `e553e65` (Vòng 1 `guards.py` + `B7.1–B7.3`); `c707c51` (`LAB 10: chot cong vong 1, quyet dinh v1`, hash `5249aa04`); `0168614` (Vòng 2 `S2`: `guards.py`, `monitors.py`, `operating_gates.json`, Phiếu C `C0–C2, C7–C8`).
+- Mã lần chạy: `R-base-before-20261118-161705-bde05c` (base), `R-base-after-20261118-163931-0cad60` (cổng Vòng 1), `R-base-prepared-20261118-165856-2a46a2` (chốt `prepared`), `R-S2-grade-20261118-170657-2a46a2` (S2 `prepared`), `R-S2-after-20261118-171052-6b0d11` & `R-S2-grade-20261118-171055-6b0d11` (S2 `PASS-VISIBLE`).
+- File: `lab10/guards.py`, `lab10/monitors.py`, `config/operating_gates.json`, `templates/form-b-evaluation-gates.md`, `templates/form-c-incident.md`.
+- AI: dùng trợ lý AI để đọc cấu trúc repo, phân tích trace lỗi, gợi ý thiết kế cổng `guards.py` / `monitors.py` và rà soát đối chiếu số liệu; mọi con số và code đều được tự chạy kiểm chứng trực tiếp.
+
+### Exit ticket
+
+- Học được: cổng bảo vệ cấp hệ thống (nằm ngoài model và prompt, đối chiếu trực tiếp nguồn sự thật DB) ngăn được cả lỗi tin lời khách lẫn prompt injection mà không làm hỏng ca hợp lệ, nhưng vẫn cần đi kèm `pilot_scope` và chỉ số `monitors` phù hợp để đảm bảo bài toán kinh doanh (ROI, chi phí/ticket).
+- Chưa chắc: hiệu năng và độ bền của các cổng hiện tại trên bộ test ẩn (với các kiểu diễn đạt ticket hoặc tình huống biên mới ngoài `S2`) và thời gian duyệt thực tế của nhân sự khi áp dụng quy trình kiểm mẫu 10% ngoài thực địa.
