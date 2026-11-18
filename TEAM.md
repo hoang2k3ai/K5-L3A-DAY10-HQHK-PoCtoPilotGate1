@@ -63,7 +63,9 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Vai **Sản phẩm và kinh doanh** (cùng bạn Khánh); đổi từ Kỹ sư cổng sang vai này ở CP1.
 - Phiếu A: mục **A1** (câu 1.1), **A3** (câu 1.5), **A4** (câu 1.6: câu tiêu chí, hai câu ranh giới đầu ra, bảng soát bốn câu, nhóm `business_ops`, ngày xem lại).
-- File: `config/acceptance_criteria.json` (bản điền đầu tiên), `templates/form-a-criteria.md` (A1, A3, A4), `TEAM.md` (bảng thành viên).
+- Phiếu B: **B3** (câu 2.3: bản đồ dữ liệu, ví dụ drift REFUND-v4), dòng **Kinh doanh** của **B6** (câu 2.5), **B7.4** (câu 2.9: cổng kinh doanh), hai dòng ngoài kỹ thuật của **B4** (Ngân sách, Phạm vi pilot), hai ô của **B8**.
+- Phiếu C: **C12** (quyết định Gate 1 v2 và ba dòng bắt buộc), **C3.1** (mức kiểm soát của con người, thẻ S2), **C10** (risk register, 4 dòng).
+- File: `config/acceptance_criteria.json` (bản điền đầu tiên), `config/operating_gates.json` (mục `business`), `templates/form-a-criteria.md`, `templates/form-b-evaluation-gates.md`, `templates/form-c-incident.md`, `TEAM.md`.
 
 ### Đóng góp cụ thể
 
@@ -71,17 +73,21 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 - Soạn nháp Phiếu A: mục tiêu hệ thống (câu 1.1), phương án (b) của câu 1.5, sáu câu tiêu chí "Nếu … thì chúng tôi sẽ …", ranh giới đầu ra (300.000đ/khách/ngày, 2.000.000đ/ngày, lỗi hãng thứ 3 trở đi phải có người duyệt), bảng soát bốn câu hỏi.
 - Điền `config/acceptance_criteria.json` lần đầu và suy ngưỡng `business_ops` từ `ops_facts`, `ops_limits` và công thức trong `lab10/ops.py` (chi phí/ticket, ROI, `escalation_rate_max`, `queue_stuck_max`). Bộ ngưỡng cuối cùng do cả nhóm chốt trước khi ký.
 
+- Điền mục `business` của `config/operating_gates.json` (trần hoàn 2.000.000đ, ngân sách LLM 1.500đ, ROI 0,5) theo `ops_limits`; chạy `lab10.eval` và `lab10.grade --incident S2` để kiểm chứng số của Hùng, phát hiện kho `?` (`T-018`) tốn 10.359đ/ticket, cao hơn làm tay.
+- Soạn nháp C12: quyết định v2 Tiếp tục, bằng chứng từ gói S2, ba dòng bắt buộc.
+- Điền C3.1 từ trace `S2-01` mốc base (chữ cài trong ticket làm trợ lý chọn `payer = MERCHANT` và hoàn 475.000đ thay vì 25.000đ, không có mã phê duyệt) và C10 gồm bốn rủi ro có PIC và chỉ số lấy từ report/`monitors.py`.
+
 ### Bằng chứng
 
-- Commit: `d08395d` (CP1, `TEAM.md`), `24b7931` (đổi vai), `73d79ca` (nháp Phiếu A), `5489e98` (điền JSON), `c654b04` (chỉnh ngưỡng theo `ops_facts`).
-- Dòng phiếu: Phiếu A mục A1 (1.1), A3 (1.5), A4 (1.6, "Căn cứ ngưỡng").
-- Máy đo: chưa có `runs/`; chưa chạy `eval` vì ký tiêu chí trước (commit ký: `cbfa81c`).
+- Commit: `d08395d` (CP1, `TEAM.md`), `24b7931` (đổi vai), `73d79ca` (nháp Phiếu A), `5489e98` (điền JSON), `c654b04` (chỉnh ngưỡng theo `ops_facts`), `0500b77` và `489edb8` (Phiếu B), `8a3a884` (`operating_gates.json` mục business), `9d04ed7` (C12).
+- Dòng phiếu: Phiếu A mục A1 (1.1), A3 (1.5), A4 (1.6, "Căn cứ ngưỡng"); Phiếu B mục B3, B4 (hai dòng ngoài kỹ thuật), B6 (dòng Kinh doanh), B7.4; Phiếu C mục C12, C3.1, C10.
+- Máy đo: chỉ chạy `eval` và `grade` sau khi ký (commit ký `cbfa81c`); mã lần chạy dùng làm bằng chứng cho S2 ở C12 là `R-S2-{before,prepared,after}-20261118-171439-ae34d0` (từ `R-S2-grade-20261118-171438-ae34d0`).
 - AI: dùng trợ lý AI soạn nháp và đối chiếu số trong `data/world.json`, `lab10/ops.py`; ngưỡng cuối do nhóm quyết.
 
 ### Exit ticket
 
-- Học được: (bạn tự viết)
-- Chưa chắc: (bạn tự viết)
+- Học được: **[NHÁP · Quân, sửa lại bằng lời của bạn]** một con số tổng (pass_rate 0,9909 ở bộ nền) có thể che hoàn toàn một lỗi gây thiệt hại ra ngoài LogiX (một ticket `T-002@55`: hoàn oan 20.000đ và ghi oan lỗi hãng), nên ngưỡng an toàn phải đặt riêng bằng 0 chứ không gộp vào pass_rate; và ngưỡng kinh doanh phải suy từ `ops_facts` (mỗi ca chuyển người tốn 10.000đ, bằng làm tay), không chép từ ví dụ.
+- Chưa chắc: **[NHÁP · Quân, sửa lại bằng lời của bạn]** các con số vận hành đều là mock (6 ca/giờ, 10 phút/ca, chi phí LLM theo độ dài chữ), nên chưa biết chi phí 5.273đ/ticket và ROI 0,9 trên gói S2 có giữ được khi người duyệt thật chậm hơn, và khi REFUND-v4 (01/12/2026) làm tỉ lệ chuyển người tăng.
 
 ## TranManhHung-2A202603496
 
