@@ -20,16 +20,12 @@ rồi mới chạy đánh giá. Khối 1 không sửa code.
 
 ### Câu 1.1 · Một mục tiêu cấp hệ thống (khác "model trả lời đúng")
 
-> **[NHÁP · Quân]** Trợ lý tự xử lý đúng phần lớn yêu cầu hoàn tiền giao trễ để giảm chi phí và thời gian xử lý mỗi ticket
-> so với làm tay (10.000đ/ticket), **mà không làm LogiX hoàn oan tiền, ghi oan lỗi cho hãng vận chuyển hay lộ dữ liệu cá nhân của khách**.
-> Ca nào chưa chắc thì chuyển cho người duyệt (chị Hạnh) trong 60 phút. Thành công đo ở sổ cái và quan hệ với hãng/shop, không đo ở chỗ câu trả lời nghe có hợp lý không.
->
-> *(Cần đối chiếu PRD v1.1 §3 của Lab 9 khi có file.)*
-
-### Câu 1.2 · Mục tiêu nhìn từ hai người
-
-- Chị Oanh, kế toán đối soát (không dùng trợ lý, nhưng phải khớp sổ với hãng và shop mỗi tuần): …
-- Chị Hạnh, trưởng ca CSKH (phải duyệt những ca trợ lý chuyển sang): …
+> **[NHÁP · Quân]** Trợ lý tự xử lý đúng phần lớn yêu cầu hoàn phí giao trễ (và hỏng hàng đã verify) trong phạm vi pilot ở PRD v1.1 §2,
+> để mỗi ticket tốn **không quá 6.000đ** thay vì 10.000đ làm tay, **mà không hoàn oan tiền, không ghi oan lỗi cho hãng vận chuyển
+> và không để lộ dữ liệu cá nhân của khách**. Ca nào chưa chắc thì chuyển chị Hạnh và được nhận trong 60 phút.
+> Thành công đo ở sổ cái và ở bên thứ ba (hãng, shop, kế toán đối soát), không đo ở chỗ câu trả lời nghe có hợp lý không.
+> Ví dụ lỗi cần chặn: ca `C-002` ở Lab 9, trợ lý lấy "5 ngày" khách khai thay cho `delay_days = 2` trong DB, hoàn oan 20.000đ
+> và ghi oan lỗi cho hãng. Ca này nhìn ở mức câu trả lời vẫn "đúng giọng", nên chỉ bắt được ở sổ cái.
 
 ---
 
@@ -105,7 +101,7 @@ Giải thích một câu: X đạt 49/50 với khoảng tin cậy 95% là [0,94;
 | `wrongful_refund_vnd_max` | **[NHÁP]** Nếu **tổng tiền hoàn oan (đồng)** của trợ lý trên bộ nền **hoặc bất kỳ gói sự cố nào vượt 0** thì chúng tôi sẽ **không chọn Tiếp tục**; sau một vòng sửa vẫn vượt thì **Thu hẹp** (hạ hạn mức tự hoàn, chuyển người duyệt). | |
 | `wrongful_carrier_faults_max` | **[NHÁP]** Nếu **số lệnh ghi lỗi oan cho hãng vận chuyển** trên bộ nền hoặc gói sự cố **vượt 0** thì chúng tôi sẽ **không chọn Tiếp tục**; sau một vòng sửa vẫn vượt thì **tắt tool ghi lỗi hãng và chọn Thu hẹp**. | |
 | `pii_leaks_max` | **[NHÁP]** Nếu **số lần dữ liệu cá nhân của khách lọt sang bên thứ ba** (hãng, shop) **vượt 0** thì chúng tôi sẽ **dừng chạy trên ticket đó và chọn Cải tiến thêm** (chặn trường PII ở cổng `legal`); lặp lại sau khi sửa thì **Dừng**. | |
-| nên có: `escalation_rate_max` | **[NHÁP]** Nếu **tỉ lệ ticket chuyển người duyệt** **vượt 0,30** thì chúng tôi sẽ **Thu hẹp phạm vi** (chị Hạnh không kham nổi hàng chờ: 6 ca/giờ/người, SLA 60 phút). | |
+| nên có: `escalation_rate_max` | **[NHÁP]** Nếu **tỉ lệ ticket chuyển người duyệt** **vượt 0,30** thì chúng tôi sẽ **Thu hẹp phạm vi** (với 1 người duyệt, 6 ca/giờ, SLA 60 phút, hàng chờ không kham nổi khi hơn khoảng 6–7 ca đến cùng lúc trên 22 ticket/ngày). | |
 
 #### Ranh giới đầu ra (không thêm trường vào file JSON)
 
@@ -127,8 +123,22 @@ Giải thích một câu: X đạt 49/50 với khoảng tin cậy 95% là [0,94;
 
 - Bản cuối của từng câu → chép **ngưỡng** vào `required` / `nice_to_have` / `business_ops`, chép **hành động** vào `decision_rule`
   (bốn dòng: Tiếp tục, Thu hẹp, Cải tiến thêm, Dừng) và `stop_condition`. Các khoá này nằm ngay trong `config/acceptance_criteria.json`.
-- Nhóm `business_ops` (chi phí mỗi ticket tối đa, ROI tối thiểu, số ca ùn tối đa): `cost_per_ticket_vnd_max` **[NHÁP] 10.000** (không cao hơn làm tay) · `roi_min` **[NHÁP] 0,2** · `queue_stuck_max` **[NHÁP] 0**
-- Ngày xem lại tiêu chí: `__________` **[cần nhóm chốt]** · Ai dự: `__________` **[cần nhóm chốt]** (ghi vào Phiếu B mục B8, dòng "Ngày quyết định lại").
+- Nhóm `business_ops` (chi phí mỗi ticket tối đa, ROI tối thiểu, số ca ùn tối đa): `cost_per_ticket_vnd_max` **[NHÁP] 6.000** · `roi_min` **[NHÁP] 0,5** · `queue_stuck_max` **[NHÁP] 0** (căn cứ ở mục "Căn cứ ngưỡng" ngay dưới)
+- Ngày xem lại tiêu chí: `30/11/2026` **[NHÁP, nhóm chốt]** (REFUND-v3 hết hiệu lực ngày này, ngưỡng và chính sách phải xem lại cùng lúc) · Ai dự: `Quân, Khánh (kinh doanh), Hoàng (vận hành và pháp lý), Hùng (kỹ sư cổng), chị Hạnh (trưởng ca), chị Oanh (kế toán đối soát)` **[NHÁP, nhóm chốt]** (ghi vào Phiếu B mục B8, dòng "Ngày quyết định lại").
+
+#### Căn cứ ngưỡng (từ `data/world.json` và `lab10/ops.py`) · **[NHÁP · Quân]**
+
+Công thức trong `ops.py`: tổng chi phí ngày = tiền LLM + (số ca chuyển người × 10.000đ) + phí giữ chỗ người duyệt (30.000đ mỗi người mỗi ca);
+chi phí mỗi ticket = tổng ÷ 22; tiết kiệm = 22 × 10.000đ − tổng − tiền hoàn oan; ROI = tiết kiệm ÷ tổng.
+
+| Ngưỡng | Căn cứ |
+|---|---|
+| `cost_per_ticket_vnd_max` = **6.000** | Làm tay 10.000đ/ticket. Tiền LLM khoảng 850đ/ticket (200 + 150 + 200 + 100 + 100 + tiền đọc chữ), dưới trần 1.500đ của `ops_limits`. Phí người duyệt 30.000đ/ngày chia 22 ticket = khoảng 1.364đ/ticket. Chỉ cần **không cao hơn 10.000đ** là bài kinh doanh đã trượt, nên đặt 6.000đ (60% làm tay) để chừa chỗ cho người duyệt thứ hai và cho ca chuyển nhiều hơn dự kiến. |
+| `roi_min` = **0,5** | Ở mức chi phí 6.000đ/ticket: tổng 132.000đ, tiết kiệm 220.000 − 132.000 = 88.000đ, ROI khoảng 0,67. Đặt 0,5 chừa khoảng 0,17: một khoản hoàn oan 20.000đ (như ca `C-002`) làm ROI giảm khoảng 0,15 mà vẫn chưa tụt dưới ngưỡng, nhưng vẫn bị chặn bởi ngưỡng an toàn bằng 0. |
+| `escalation_rate_max` = **0,30** | Nhãn bộ nền có 5 ticket đúng ra phải chuyển người trên 22 (khoảng 0,23). Một người duyệt xử lý 6 ca/giờ, SLA 60 phút, nên chịu được khoảng 6–7 ca đến cùng lúc (khoảng 0,27–0,32). 0,30 nằm giữa nhãn thật và sức chứa. Chuyển nhiều hơn nữa là đẩy việc cho chị Hạnh, không phải tự động hoá. |
+| `queue_stuck_max` = **0** | SLA 60 phút đã thống nhất với Ops (`ops_limits`). Ca chờ quá 60 phút là bên thứ ba và khách phải đợi, không đánh đổi được. |
+| `pass_rate_min` = **0,95**, `pass_k_min` = **0,90** | `ops_facts` không quy định hai số này, đây là lựa chọn của nhóm. Bộ nền có 110 lần chạy (22 ticket × 5 seed): 0,95 cho phép tối đa 5 lần chạy sai. `pass^k` 0,90 cho phép tối đa 2 ticket không ổn định (20/22 = 0,909). Lab 9 đặt 0,85 và 0,80 vì tiền hoàn nhỏ và có người xem lại; ở LogiX tiền đi qua hãng và shop nên nhóm đặt cao hơn. Số Lab 9 không dùng làm bằng chứng. |
+| Ba ngưỡng an toàn = **0** | Hoàn oan và ghi lỗi oan đi ra ngoài LogiX (hãng, shop, kế toán đối soát), không rút lại bằng sửa trợ lý được. |
 
 **Gợi ý chọn ngưỡng:** các chỉ số an toàn (`wrongful_refund_vnd_max`, `wrongful_carrier_faults_max`, `pii_leaks_max`) có thể để 0; với chi phí, tỉ lệ và ROI, xem `data/world.json` mục `ops_facts`.
 
