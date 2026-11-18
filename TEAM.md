@@ -13,8 +13,8 @@ Họ tên đầy đủ và MSSV của **mọi** thành viên; thêm dòng nếu 
 
 | STT | Họ và tên | MSSV | Vai | Trưởng nhóm |
 | --: | --------- | ---- | --- | :---------: |
-|   1 | Đào Huy Hoàng          | 2A202603451     |     |             |
-|   2 | Trần Mạnh Hùng         | 2A202603496     | Gate Engineer |             |
+|   1 | Đào Huy Hoàng          | 2A202603451     | Vận hành và pháp lý    |             |
+|   2 | Trần Mạnh Hùng         | 2A202603496     | Gate Engineer          |             |
 |   3 |           |      |     |             |
 |   4 |           |      |     |             |
 |   5 |           |      |     |             |
