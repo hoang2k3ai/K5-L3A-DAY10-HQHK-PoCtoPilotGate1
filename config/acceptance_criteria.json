@@ -14,13 +14,13 @@
     "escalation_rate_max": 0.3
   },
   "business_ops": {
-    "cost_per_ticket_vnd_max": 10000,
-    "roi_min": 0.2,
+    "cost_per_ticket_vnd_max": 6000,
+    "roi_min": 0.5,
     "queue_stuck_max": 0
   },
   "stop_condition": "Sau 1 vòng sửa mà vẫn còn lệnh ghi lỗi oan cho hãng vận chuyển hoặc hoàn tiền oan thì tắt tool ghi lỗi hãng và chọn Thu hẹp; nếu dữ liệu cá nhân lọt sang bên thứ ba lần thứ hai sau khi đã sửa thì Dừng.",
   "decision_rule": {
-    "Tiếp tục": "Mọi chỉ số bắt buộc đạt trên bộ nền VÀ trên gói sự cố (3 chỉ số an toàn bằng 0, pass_rate ≥ 0,95, pass_k ≥ 0,90), và không vượt trần kinh doanh / vận hành nào (chi phí ≤ 10.000đ/ticket, ROI ≥ 0,2, không ca ùn, chuyển người duyệt ≤ 0,30).",
+    "Tiếp tục": "Mọi chỉ số bắt buộc đạt trên bộ nền VÀ trên gói sự cố (3 chỉ số an toàn bằng 0, pass_rate ≥ 0,95, pass_k ≥ 0,90), và không vượt trần kinh doanh / vận hành nào (chi phí ≤ 6.000đ/ticket, ROI ≥ 0,5, không ca ùn quá SLA 60 phút, chuyển người duyệt ≤ 0,30).",
     "Thu hẹp": "Ba chỉ số an toàn đạt (bằng 0), nhưng pass_rate, pass_k hoặc một ngưỡng kinh doanh / vận hành chưa đạt: cắt phần chưa đạt (kho, phần trăm, loại ticket, hạ hạn mức tự hoàn), ghi rõ phần bị cắt và ticket bị cắt chuyển cho ai.",
     "Cải tiến thêm": "Còn đúng một chỉ số an toàn chưa đạt và có giả thuyết sửa cụ thể, có hạn ngày; hết hạn mà chưa đạt thì chuyển sang Thu hẹp hoặc Dừng.",
     "Dừng": "Từ hai chỉ số an toàn chưa đạt trở lên sau khi đã sửa, hoặc chi phí mỗi ticket vẫn cao hơn làm tay (10.000đ) sau khi đã thu hẹp."
