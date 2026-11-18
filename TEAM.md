@@ -39,7 +39,7 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Chọn eval card Lab 9 và ca chính **C-002** (`seeded_regression C-002@11`, FM-03 `ticket_trust`) ứng với `T-002@55`; ca dự phòng C-101 (prompt injection), C-113 (PII/số điện thoại), C-005 (cross-principal), C-006/C-103 (điều khoản hết hiệu lực).
 - Lập `docs/lab9-reference/` (README ánh xạ ngưỡng Lab 9 → Lab 10 + 3 khoảng trống, eval card, PRD v1.1, trace, eval case C-002) kèm nguồn.
-- Đề xuất bộ ngưỡng **0,91 / 0,91 / 6.000đ / ROI 0,5** và phần "Căn cứ ngưỡng": 110 trial → 0,91 ⇔ ≤9 lần trượt ⇔ đúng 1 ticket hỏng; pass^k 0,91 ⇔ ≤1 ticket không đạt 5/5; 6.000đ nằm dưới trần `cost_per_ticket_vnd_max` và tại trần ROI ≈ 0,67 > 0,5. Bàn chưa chốt ký nên các số này vẫn đang chờ review.
+- Đề xuất bộ ngưỡng **0,91 / 0,91 / 6.000đ / ROI 0,5** và phần "Căn cứ ngưỡng": 110 trial → 0,91 ⇔ ≤9 lần trượt ⇔ đúng 1 ticket hỏng; pass^k 0,91 ⇔ ≤1 ticket không đạt 5/5; 6.000đ nằm dưới trần `cost_per_ticket_vnd_max` và tại trần ROI ≈ 0,67 > 0,5. Bàn đã chốt và ký bộ ngưỡng này lúc 2026-11-18 16:08:15 (commit `cbfa81c`, `Sign acceptance criteria`), trước lần chạy đánh giá đầu tiên.
 - Điền Khối 1 Phiếu A: A1 (câu 1.1 + 1.2 với `NV-OANH`/`NV-HANH`), A2 (hai cột, 5 dòng), A3 (phương án b), A4 (6 tiêu chí + 2 dòng ranh giới + 4 dòng soát + `business_ops` + ngày soát lại 30/11/2026).
 - Sửa lỗi toàn vẹn hash: `core.autocrlf=true` làm 19 file khoá lệch sha256; đặt `core.autocrlf false` + `core.eol lf`, `git rm --cached -r .` rồi `git reset --hard HEAD` → `integrity` chỉ còn báo 32 file `incidents/*` chưa pull (đúng phút 125 mới lấy thẻ).
 - Đặt danh tính Git `2A202603451 / 2A202603451@example.com`, gộp nhánh của Quân/Hùng/Khánh, giữ `main` = `origin/main`.
