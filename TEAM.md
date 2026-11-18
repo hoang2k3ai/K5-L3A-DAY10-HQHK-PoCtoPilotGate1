@@ -13,7 +13,7 @@ Họ tên đầy đủ và MSSV của **mọi** thành viên; thêm dòng nếu 
 
 | STT | Họ và tên | MSSV | Vai | Trưởng nhóm |
 | --: | --------- | ---- | --- | :---------: |
-|   1 | Đào Huy Hoàng          | 2A202603451     |     |             |
+|   1 | Đào Huy Hoàng          | 2A202603451     | Vận hành và pháp lý    |             |
 |   2 |           |      |     |             |
 |   3 |           |      |     |             |
 |   4 |           |      |     |             |
